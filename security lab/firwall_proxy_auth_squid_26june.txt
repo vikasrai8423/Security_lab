@@ -1,0 +1,140 @@
+Q).create three user tom , jerry, and noddy and allow these websites(disney,hotstar,netflix,jio) 
+
+systemctl status squid
+  257  systemctl start squid
+  258  ip a
+  259  htpasswd /etc/squid/squid-users user2
+  260  cat /etc/squid/squid-users
+  261  htpasswd /etc/squid/squid-users user3
+  262  cat /etc/squid/squid-users
+  263  vim /etc/squid/user1.txt
+  264  vi /etc/squid/squid.conf
+  265  vim /etc/squid/squid.conf
+  266  systemctl restart squid
+  267  systemctl status squid
+  268  vim /etc/squid/squid.conf
+  269  systemctl restart squid
+  270  vim /etc/squid/squid.conf
+  271  systemctl restart squid
+  272  vim /etc/squid/squid.conf
+  273  systemctl restart squid
+  274  vim /etc/squid/squid.conf
+  275  systemctl restart squid
+  276  vim /etc/squid/squid.conf
+  277  vim /etc/squid/cartoon.txt
+  278  htpasswd /etc/squid/squid-users tom
+  279  htpasswd /etc/squid/squid-users jerry
+  280  htpasswd /etc/squid/squid-users noddy
+  281  systemctl restart squid
+  282  journalctl -xe
+  283  vim /etc/squid/squid.conf
+  284  systemctl restart squid
+  285  vim /etc/squid/squid.conf
+  286  cat /etc/squid/squid.conf
+  287  vim /etc/squid/squid.conf
+  288  systemctl restart squid
+  289  vi /etc/squid/cartoon.txt 
+  290  history 
+
+1 #
+  2 # Recommended minimum configuration:
+  3 #
+  4 
+  5 # Example rule allowing access from your local networks.
+  6 # Adapt to list your (internal) IP networks from where browsing
+  7 # should be allowed
+  8 acl localnet src 10.0.0.0/8     # RFC1918 possible internal network
+  9 acl localnet src 172.16.0.0/12  # RFC1918 possible internal network
+ 10 acl localnet src 192.168.0.0/16 # RFC1918 possible internal network
+ 11 acl localnet src fc00::/7       # RFC 4193 local private network range
+ 12 acl localnet src fe80::/10      # RFC 4291 link-local (directly plugged) machines
+ 13 
+ 14 acl SSL_ports port 443
+ 15 acl Safe_ports port 80          # http
+ 16 acl Safe_ports port 21          # ftp
+ 17 acl Safe_ports port 443         # https
+ 18 acl Safe_ports port 70          # gopher
+ 19 acl Safe_ports port 210         # wais
+ 20 acl Safe_ports port 1025-65535  # unregistered ports
+ 21 acl Safe_ports port 280         # http-mgmt
+ 22 acl Safe_ports port 488         # gss-http
+ 23 acl Safe_ports port 591         # filemaker
+ 24 acl Safe_ports port 777         # multiling http
+ 25 acl CONNECT method CONNECT
+ 26 
+ 27 #
+ 28 # Recommended minimum Access Permission configuration:
+ 29 #
+ 30 # Deny requests to certain unsafe ports
+ 31 http_access deny !Safe_ports
+ 32 
+ 33 # Deny CONNECT to other than secure SSL ports
+ 34 http_access deny CONNECT !SSL_ports
+ 35 
+ 36 # Only allow cachemgr access from localhost
+ 37 http_access allow localhost manager
+ 38 http_access deny manager
+ 39 
+ 40         # We strongly recommend the following be uncommented to protect innocent
+ 41 # web applications running on the proxy server who think the only
+ 42 # one who can access services on "localhost" is a local user
+ 43 #http_access deny to_localhost
+ 44 
+ 45 #
+ 46 # INSERT YOUR OWN RULE(S) HERE TO ALLOW ACCESS FROM YOUR CLIENTS
+ 47 #
+ 48 auth_param basic program /usr/lib64/squid/basic_ncsa_auth /etc/squid/squid-users
+ 49 auth_param basic children 5
+ 50 auth_param basic realm Squid Basic Authentication
+ 51 auth_param basic credentialsttl 2 hours
+ 52 acl acts_users proxy_auth REQUIRED
+ 53 acl user1 proxy_auth user1
+ 54 acl cartoons proxy_auth tom jerry noddy
+ 55 acl cartoon-access dstdomain "/etc/squid/cartoon.txt"
+ 56 acl user1-access dstdomain "/etc/squid/user1.txt"
+ 57 http_access allow user1-access user1
+ 58 http_access allow cartoon-access cartoons
+ 59 # Example rule allowing access from your local networks.
+ 60 # Adapt localnet in the ACL section to list your (internal) IP networks
+ 61 #acl hpcsalab src 10.10.10.0/24 
+ 62 #acl client src 10.10.10.130
+ 63 #acl window src 10.10.10.132
+ 64 #acl hpcsa-time time A 14:00-17:20
+ 65 #acl hpcsa dstdomain "/etc/squid/time-blocked.txt"
+ 66 #acl client-blocked dstdomain "/etc/squid/client1-blocked.txt"
+ 67 #acl badwords url_regex -i "/etc/squid/director-blocked.txt"
+ 68 #acl window-blocked dstdomain "/etc/squid/window-blocked.txt"
+ 69 #acl hpcsalab-blocked dstdomain "/etc/squid/blocked.txt"
+ 70 #http_access allow hpcsa hpcsa-time
+ 71 #http_access allow badwords client
+ 72 #http_access deny badwords !client
+ 73 #http_access deny hpcsa !hpcsa-time
+ 74 #http_access deny hpcsalab-blocked hpcsalab
+ 75 #http_access deny window-blocked window
+ 76 #http_access deny client-blocked client
+ 77 #http_access deny blocked_sites hpcsalab
+ 78 http_access deny acts_users all
+ 79 #http_access allow hpcsalab
+ 80 # from where browsing should be allowed
+ 81 #http_access allow localnet
+ 82 http_access allow localhost
+ 83 
+ 84 # And finally deny all other access to this proxy
+ 85 http_access deny all
+ 86 
+ 87 # Squid normally listens to port 3128
+ 88 http_port 3128
+ 89 
+ 90 # Uncomment and adjust the following to add a disk cache directory.
+ 91 cache_dir ufs /var/spool/squid 2048 16 256
+ 92 visible_hostname proxy.hpcsa.lab
+ 93 # Leave coredumps in the first cache dir
+ 94 coredump_dir /var/spool/squid
+ 95 
+ 96 #
+ 97 # Add any of your own refresh_pattern entries above these.
+ 98 #
+ 99 refresh_pattern ^ftp:           1440    20%     10080
+100 refresh_pattern ^gopher:        1440    0%      1440
+101 refresh_pattern -i (/cgi-bin/|\?) 0     0%      0
+102 refresh_pattern .               0       20%     4320

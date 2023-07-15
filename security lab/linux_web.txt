@@ -1,0 +1,387 @@
+[root@server ~]# ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: ens33: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 00:0c:29:00:f6:60 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.15.161/24 brd 192.168.15.255 scope global noprefixroute dynamic ens33
+       valid_lft 1037sec preferred_lft 1037sec
+    inet6 fe80::5d80:9c3:bd66:845d/64 scope link noprefixroute 
+       valid_lft forever preferred_lft forever
+3: ens37: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 00:0c:29:00:f6:6a brd ff:ff:ff:ff:ff:ff
+    inet 10.10.10.134/24 brd 10.10.10.255 scope global noprefixroute dynamic ens37
+       valid_lft 1738sec preferred_lft 1738sec
+    inet6 fe80::7e9e:5296:2640:b3ec/64 scope link noprefixroute 
+       valid_lft forever preferred_lft forever
+4: tun0: <POINTOPOINT,MULTICAST,NOARP,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UNKNOWN group default qlen 100
+    link/none 
+    inet 10.8.0.1 peer 10.8.0.2/32 scope global tun0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::ddee:c229:f314:77af/64 scope link flags 800 
+       valid_lft forever preferred_lft forever
+5: virbr0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default qlen 1000
+    link/ether 52:54:00:bf:d4:6a brd ff:ff:ff:ff:ff:ff
+    inet 192.168.122.1/24 brd 192.168.122.255 scope global virbr0
+       valid_lft forever preferred_lft forever
+6: virbr0-nic: <BROADCAST,MULTICAST> mtu 1500 qdisc pfifo_fast master virbr0 state DOWN group default qlen 1000
+    link/ether 52:54:00:bf:d4:6a brd ff:ff:ff:ff:ff:ff
+[root@server ~]# setenforce 
+usage:  setenforce [ Enforcing | Permissive | 1 | 0 ]
+[root@server ~]# setenforce 0
+setenforce: SELinux is disabled
+[root@server ~]# cat /etc/selinux/config 
+
+# This file controls the state of SELinux on the system.
+# SELINUX= can take one of these three values:
+#     enforcing - SELinux security policy is enforced.
+#     permissive - SELinux prints warnings instead of enforcing.
+#     disabled - No SELinux policy is loaded.
+SELINUX=disabled
+# SELINUXTYPE= can take one of three values:
+#     targeted - Targeted processes are protected,
+#     minimum - Modification of targeted policy. Only selected processes are protected. 
+#     mls - Multi Level Security protection.
+SELINUXTYPE=targeted 
+
+
+[root@server ~]# cat /proc/sys/net/ipv4/i
+icmp_echo_ignore_all               ip_default_ttl
+icmp_echo_ignore_broadcasts        ip_dynaddr
+icmp_errors_use_inbound_ifaddr     ip_early_demux
+icmp_ignore_bogus_error_responses  ip_forward
+icmp_msgs_burst                    ip_forward_use_pmtu
+icmp_msgs_per_sec                  ipfrag_high_thresh
+icmp_ratelimit                     ipfrag_low_thresh
+icmp_ratemask                      ipfrag_max_dist
+igmp_max_memberships               ipfrag_secret_interval
+igmp_max_msf                       ipfrag_time
+igmp_qrv                           ip_local_port_range
+inet_peer_maxttl                   ip_local_reserved_ports
+inet_peer_minttl                   ip_nonlocal_bind
+inet_peer_threshold                ip_no_pmtu_disc
+[root@server ~]# cat /proc/sys/net/ipv4/ip_forward
+1
+[root@server ~]# vim /etc/sysctl.conf 
+[root@server ~]# vim /etc/sysctl.conf 
+[root@server ~]# cat /etc/sysctl.conf 
+# sysctl settings are defined through files in
+# /usr/lib/sysctl.d/, /run/sysctl.d/, and /etc/sysctl.d/.
+#
+# Vendors settings live in /usr/lib/sysctl.d/.
+# To override a whole file, create a new file with the same in
+# /etc/sysctl.d/ and put new settings there. To override
+# only specific settings, add a file with a lexically later
+# name in /etc/sysctl.d/ and put new settings there.
+#
+# For more information, see sysctl.conf(5) and sysctl.d(5).
+net.ipv4.ip_forward=1
+[root@server ~]# history
+    1  ip a
+    2  hostnamectl set-hostname client
+    3  which curl
+    4  ip a
+    5  route -n
+    6  ping www.google.com
+    7  vi /etc/resolv.conf 
+    8  ping www.google.com
+    9  vi /etc/resolv.conf 
+   10  ping www.google.com
+   11  ping www.cdac.in
+   12  ping www.google.com
+   13  nslookup www.google.com
+   14  ping www.google.com
+   15  nslookup www.google.com
+   16  ping www.google.com
+   17  cat /etc/resolv.conf 
+   18  vi /etc/resolv.conf 
+   19  ping www.google.com
+   20  nslookup www.google.com
+   21  vi /etc/resolv.conf 
+   22  curl www.google.com
+   23  curl https://www.google.com
+   24  iptable -A FORWARD -s 10.10.10.130 -d www.youtube.com -p tcp --dport=443 -j ACCEPT
+   25  iptables -A FORWARD -s 10.10.10.130 -d www.youtube.com -p tcp --dport=443 -j ACCEPT
+   26  iptables -A FORWARD -d 10.10.10.130 -s www.youtube.com -p tcp --sport=443 -j ACCEPT
+   27  iptables -L
+   28  curl https://www.microsoft.com
+   29  curl www.cisco.com
+   30  curl https://www.cisco.com
+   31  curl https://www.aws.amazon.com
+   32  curl www.wikipedia.com
+   33  nslookup www.wikipedia.com
+   34  curl www.wikipedia.com
+   35  curl www.wikipedia.org
+   36  nslookup www.cisco.com
+   37  curl https://www.cisco.com
+   38  systemctl status httpd
+   39  ip a
+   40  systemctl status httpd
+   41  nslookup www.microsoft.com
+   42  nslookup www.cisco.com
+   43  nslookup www.aws.amazon.com
+   44  ip a
+   45  nmtui
+   46  ip a
+   47  nslookup www.google.com
+   48  vim /etc/resolv.conf 
+   49  nslookup www.google.com
+   50  ip a
+   51  p a
+   52  ip a
+   53  yum install apache
+   54  yum install httpd
+   55  route -n
+   56  cat /etc/resolv.conf 
+   57  ping www.google.com
+   58  cat /etc/resolv.conf 
+   59  vi /etc/resolv.conf 
+   60  ping www.google.com
+   61  yum install httpd
+   62  yum install apache
+   63  cat /etc/resolv.conf 
+   64  cd /var/www/html/
+   65  ls
+   66  vim index.html
+   67  systemctl start apache2
+   68  systemctl restart apache2
+   69  systemctl status apache2
+   70  systemctl status httpd
+   71  systemctl restart httpd
+   72  systemctl status httpd
+   73  sestatus
+   74  vi /etc/selinux/config 
+   75  sestatus
+   76  ip a
+   77  init 6
+   78  cat /etc/resolv.conf 
+   79  ping www.google.com
+   80  exit
+   81  ip a
+   82  exit
+   83  ip a
+   84  exit
+   85  systemctl stop firewalld
+   86  systemctl restart httpd
+   87  vim index.html
+   88  vi index.html
+   89  vim index.html
+   90  cd /var/www/html/
+   91  vim index.html
+   92  history 
+   93  route -n
+   94  cat /etc/resolv.conf 
+   95  nmtui
+   96  cd
+   97  traceroute www.google.com
+   98  ping www.google.com
+   99  ping -t 2
+  100  ping -t 2 192.168.15.153
+  101  ip a
+  102  systemctl status firewalld.service 
+  103  ip a
+  104  sestatus
+  105  systemctl status firewalld.service
+  106  systemctl restart NetworkManager
+  107  nmcli networking off
+  108  nmcli networking on
+  109  systemctl restart NetworkManager
+  110  ip a
+  111  nmcli networking off
+  112  nmcli networking on
+  113  systemctl restart NetworkManager
+  114  ip a
+  115  ping www.google.com
+  116  ip a
+  117  ifup ens33
+  118  dhclient
+  119  ping www.google.com
+  120  systemtcl restart NetworkManager
+  121  systemctl restart NetworkManager
+  122  Modulus:assdd
+  123  exit
+  124  setenforce
+  125  setenforce 0
+  126  vi /etc/selinux/config 
+  127  cat /proc/sys/net/ipv4/ip_forward
+  128  vi /etc/sysctl.conf
+  129  cat /proc/sys/net/ipv4/ip_forward
+  130  yum install epel-release -y
+  131  yum install openvpn -y
+  132  cd /etc/openvpn/
+  133  wget https://github.com/OpenVPN/easy-rsa/releases/download/v3.0.6/EasyRSA-unix-v3.0.6.tgz
+  134  ls
+  135  tar -xvzf EasyRSA-unix-v3.0.6.tgz
+  136  mv EasyRSA-v3.0.6 easy-rsamv EasyRSA-v3.0.6 easy-rsa
+  137  mv EasyRSA-v3.0.6 easy-rsa
+  138  ls
+  139  cd easy-rsa/
+  140  vim vars
+  141  ls
+  142  ./easyrsa init-pki
+  143  ./easyrsa build-ca
+  144  ls pki
+  145  ls pki/private/
+  146  ./easyrsa gen-req hpcsa1 nopass
+  147  ls pki/reqs/hpcsa1.req 
+  148  cat pki/reqs/hpcsa1.req 
+  149  ./easyrsa sign-req server demovpn
+  150  ./easyrsa sign-req server hpcsa1
+  151  cat pki/issued/hpcsa1.crt 
+  152  openssl verify -CAfile pki/ca.crt pki/issued/hpcsa1.crt 
+  153  ./easyrsa gen-dh
+  154  cp pki/ca.crt /etc/openvpn/server/
+  155  cp pki/dh.pem /etc/openvpn/server/
+  156  cp pki/private/hpcsa1.key /etc/openvpn/server/
+  157  cp pki/issued/hpcsa1.crt /etc/openvpn/server/
+  158  ./easyrsa gen-req client nopass
+  159  ./easyrsa sign-req client client
+  160  ./easyrsa gen-req jerry nopass
+  161  cp pki/ca.crt /etc/openvpn/client/
+  162  ls /etc/openvpn/client/
+  163   cp pki/issued/client.crt /etc/openvpn/client/
+  164  cp pki/private/client.key /etc/openvpn/client/
+  165  ls  /etc/openvpn/client/
+  166  vi /etc/openvpn/server/server.conf
+  167  systemctl start openvpn-server@server
+  168  systemctl enable openvpn-server@server
+  169  systemctl status openvpn-server@server
+  170  systemctl start firewalld.service
+  171  systemctl enable firewalld.service
+  172  firewall-cmd --permanent --add-service=openvpn
+  173  firewall-cmd --permanent --zone=trusted --add-service=openvpn
+  174  firewall-cmd --permanent --zone=trusted --add-interface=tun0
+  175  firewall-cmd --add-masquerade
+  176  firewall-cmd --permanent --add-masquerade
+  177  firewall-cmd --permanent --direct --passthrough ipv4 -t nat -A POSTROUTING -s 10.8.0.0/24 -o ens33 -j MASQUERADE
+  178  firewall-cmd --reload
+  179  vim /etc/openvpn/client/client.ovpn
+  180  cat /etc/openvpn/client/client.ovpn
+  181  scp -r /etc/openvpn/client/ root@192.168.15.151:/root
+  182  cd /etc/openvpn/server/
+  183  vi server.conf
+  184  cat server.conf
+  185  systemctl restart openvpn-server@server
+  186  systemctl status openvpn-server@server
+  187  vi /etc/sysctl.conf
+  188  cat vars
+  189  cd
+  190  cd /etc/openvpn/easy-rsa/
+  191  cat vars
+  192  exit
+  193  ls
+  194  ll client/
+  195  route -n
+  196  ip a
+  197  ping 10.10.10.133
+  198  ip a
+  199  ping 10.10.10.133
+  200  ip a
+  201  ping 10.10.10.133
+  202  ip a
+  203  ping 10.10.10.133
+  204  ip a
+  205  ping 10.10.10.133
+  206  yum install epel-release
+  207  yum install openvpn -y
+  208  cd /root/
+  209  ls
+  210  cd client/'
+  211  cd client/
+  212  ll
+  213  ip a
+  214  openvpn --config client.ovpn
+  215  clear
+  216  cd
+  217  ip a
+  218  openvpn --config client.ovpn
+  219  hostnamectl set-hostname server
+  220  ping 10.10.10.133
+  221  cat /root/client/client.ovpn 
+  222  ip a
+  223  ping 10.10.10.133
+  224  route -n
+  225  ip a
+  226  route -n
+  227  ping 10.10.10.133
+  228  ping www.google.com
+  229  clear
+  230  cd /etc/nginx/
+  231  vim nginx.conf
+  232  systemctl restart nginx.service 
+  233  journalctl -xe
+  234  vim nginx.conf
+  235  systemctl restart nginx.service 
+  236  journalctl -xe
+  237  vim nginx.conf
+  238  systemctl restart nginx.service 
+  239  journalctl -xe
+  240  vim nginx.conf
+  241  systemctl restart nginx.service 
+  242  journalctl -xe
+  243  vim nginx.conf
+  244  systemctl restart nginx.service 
+  245  cat nginx.conf
+  246  ip a
+  247  curl http://10.10.10.135
+  248  curl http://10.10.10.133
+  249  yum install nginx
+  250  cd /etc/nginx/
+  251  pwd
+  252  ls
+  253  vi nginx.conf
+  254  vim nginx.conf
+  255  cd
+  256  sysytemctl restart nginx
+  257  systemctl restart nginx
+  258  cat nginx.conf
+  259  cat /etc/nginx/nginx.conf
+  260  sysytemctl status httpd
+  261  systemctl status httpd
+  262  systemctl start httpd
+  263  firewall-cmd --add-service=http
+  264  systemctl status httpd
+  265  systemctl status firewalld.service
+  266  vi /etc/nginx/nginx.conf
+  267  systemctl restart nginx
+  268  cd /etc/nginx/
+  269  vi nginx.conf
+  270  vim nginx.conf
+  271  systemctl restart nginx
+  272  journalctl -xe
+  273  vim nginx.conf
+  274  systemctl restart nginx
+  275  cat nginx.conf
+  276  vim nginx.conf
+  277  systemctl restart nginx
+  278  cat nginx.conf
+  279  vim nginx.conf
+  280  systemctl restart nginx
+  281  vim nginx.conf
+  282  systemctl restart nginx
+  283  vim nginx.conf
+  284  systemctl restart nginx
+  285  journalctl -xe
+  286  vim nginx.conf
+  287  systemctl restart nginx
+  288  vim nginx.conf
+  289  cat nginx.conf
+  290  systemctl status firewalld.service 
+  291  systemctl status httpd.service 
+  292  firewall-cmd -add-service=http
+  293  firewall-cmd --add-service=http
+  294  ip a
+  295  exit
+  296  ssh 172.16.10.0
+  297  ip a
+  298  setenforce 
+  299  setenforce 0
+  300  cat /etc/selinux/config 
+  301  cat /proc/sys/net/ipv4/ip_forward
+  302  vim /etc/sysctl.conf 
+  303  cat /etc/sysctl.conf 
+  304  history
+[root@server ~]# 

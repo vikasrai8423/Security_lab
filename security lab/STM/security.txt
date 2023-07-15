@@ -1,0 +1,27 @@
+ 142  iptables -L
+  143  iptables -t nat -L
+  144  vim /etc/resolv.conf 
+  145  iptables -L
+  146  iptables -t nat -L
+  147  iptables -P FORWARD DROP
+  148  iptables -L
+  149  iptables -t nat -A POSTROUTING -s 20.20.20.0/24 -o ens33 -j MASQUERADE 
+  150  iptables -P FORWARD ACCEPT
+  151  ip a
+  152  history
+  153  cat /etc/resolv.conf 
+  154  vim /etc/resolv.conf 
+  155  iptables -F
+  156  iptables -L
+  157  iptables -A FORWARD -s 20.20.20.0/24 -d 192.168.20.2 -p udp --dport 53 -j ACCEPT
+  158  iptables -A FORWARD -d 20.20.20.0/24 -s 192.168.20.2 -p udp --sport 53 -j ACCEPT
+  159  iptables -t nat -L
+  160  iptables -L
+  161  history
+  162  iptables -A FORWARD -s 20.20.20.0/24 -d 192.168.20.2 -p udp --dport 53 -j ACCEPT
+  163  iptables -A FORWARD -d 20.20.20.0/24 -s 192.168.20.2 -p udp --sport 53 -j ACCEPT
+  164  iptables -A FORWARD -s 20.20.20.0/24 -d 192.168.20.2 -p tcp --dport 443 -j ACCEPT
+  165  iptables -A FORWARD -d 20.20.20.0/24 -s 192.168.20.2 -p tcp --sport 443 -j ACCEPT
+  166  iptables -P FORWARD DROP
+  167  iptables -A FORWARD -s 20.20.20.135 -d www.youtube.com -p tcp --dport 443 -m state --state NEW,ESTABLISHED -j ACCEPT
+  168  iptables -A FORWARD -d 20.20.20.135 -s www.youtube.com -p tcp --sport 443 -m state --state NEW,ESTABLISHED -j ACCEPT

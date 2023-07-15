@@ -1,0 +1,168 @@
+ip a
+    2  ifup ens37
+    3  ip a
+    4   yum search iptables
+    5   yum install iptables iptables-utils
+    6  systemctl status iptables
+    7  systemctl status iptables.service 
+    8   yum search iptables
+    9  systemctl start iptables.service 
+   10  sestatus
+   11  setenforce 0
+   12  systemctl start iptables.service 
+   13  systemctl status firewalld.service 
+   14  systemctl stop firewalld.service 
+   15  systemctl start iptables.service 
+   16  systemctl disable firewalld.service 
+   17  systemctl start iptables.service 
+   18  iptables -L
+   19  systemctl status iptables.service 
+   20   yum search iptables
+   21   yum install iptables iptables-utils
+   22   yum install iptables.services
+   23* 
+   24   yum install iptables.services
+   25  cat /proc/sys/net/ipv4/ip_forward
+   26  echo 1 > /proc/sys/net/ipv4/ip_forward
+   27  cat /proc/sys/net/ipv4/ip_forward
+   28  vi /etc/sysctl.conf 
+   29  systemctl status iptables.service 
+   30  cat /proc/sys/net/ipv4/ip_forward
+   31  vi /etc/sysctl.conf 
+   32  systemctl status iptables.service 
+   33  yum install iptables
+   34  systemctl status iptables.service 
+   35  systemctl start iptables.service 
+   36  /usr/sbin/iptables-apply
+   37  cat /usr/sbin/iptables-apply
+   38  cd /usr/sbin/iptables-apply
+   39  cd /usr/sbin/
+   40  ls
+   41  cd
+   42  systemctl status firewalld.service 
+   43  systemctl start firewalld.service 
+   44  systemctl enable firewalld.service 
+   45  systemctl status iptables.service 
+   46  systemctl start iptables.service 
+   47  systemctl restart iptables.service 
+   48  iptables -L
+   49  iptables -F
+   50  iptables -L
+   51  iptables -t nat -L
+   52  systemctl restart iptables.service 
+   53  systemctl start iptables.service 
+   54  systemctl stop firewalld.service 
+   55  systemctl disable firewalld.service 
+   56  yum install iptables-services.x86_64 
+   57  yum install iptables-utils
+   58  systemctl status iptables.service 
+   59  vi /etc/sysctl.c
+   60  vi /etc/sysctl.conf 
+   61  cat /usr/sbin/iptables-apply
+   62  cat /proc/sys/net/ipv4/ip_forward
+   63  systemctl start iptables.service 
+   64  systemctl status iptables.service 
+   65  iptables -L
+   66  iptables -F
+   67  iptables -L
+   68* 
+   69  iptables -t nat -L
+   70  iptables -P FORWARD DROP
+   71  iptables -L
+   72  iptables -A FORWARD -s 20.20.20.0/24 -d 192.168.20.2 -p udp 53 -j ACCEPT
+   73  iptables -A FORWARD -s 20.20.20.0/24 -d 192.168.20.2 -p udp --dport 53 -j ACCEPT
+   74  iptables -A FORWARD -d 20.20.20.0/24 -s 192.168.20.2 -p udp --sport 53 -j ACCEPT
+   75  iptables -L
+   76* 
+   77  iptables -A FORWARD -d 20.20.20.135 -s www.bookmyshow.com -p tcp --sport 443 -m state --state NEW,ESTABLISHED -j ACCEPT 
+   78  iptables -L
+   79  iptables -P FORWARD DROP
+   80  iptables -L
+   81  iptables -t nat -L
+   82  iptables -A FORWARD -s 20.20.20.0/24 -d 192.168.20.2 -p udp --dport 53 -j ACCEPT
+   83  iptables -A FORWARD -d 20.20.20.0/24 -s 192.168.20.2 -p udp --sport 53 -j ACCEPT
+   84  iptables -L
+   85  iptables -A FORWARD -d 20.20.20.135 -s www.cisco.com -p tcp --sport 443 -m state --state NEW,ESTABLISHED -j ACCEPT 
+   86* iptables -A FORWARD -s 20.20.20.135 -d www.cisco.com -p tcp --dport 443 -m state --state NEW,ESTABLISHED -j ACCEPT
+   87  iptables -L
+   88  iptables -A FORWARD -d 20.20.20.135 -s www.cisco.com -p tcp --sport 443 -m state --state NEW,ESTABLISHED -j ACCEPT 
+   89  history
+   90  iptables -L
+   91  iptables -t nat -L
+   92  iptables -P FORWARD ACCEPT
+   93  iptables -L
+   94  iptables -P FORWARD DROP
+   95  iptables -L
+   96  systemctl status iptables.service 
+   97  cat /etc/resolv.conf 
+   98  vim /etc/resolv.conf 
+   99  route -n
+  100  cat /usr/sbin/iptables-apply
+  101  cat /proc/sys/net/ipv4/ip_forward
+  102  iptables -L
+  103  iptables -F
+  104  iptables -L
+  105  iptables -t nat -L
+  106  iptables -L
+  107  iptables -P FORWARD ACCEPT
+  108  iptables -L
+  109  iptables -A FORWARD -d 20.20.20.0/24 -s 192.168.72.20 -p udp --sport 53 -j ACCEPT
+  110* iptables -A FORWARD -s 20.20.20.0/24 -d 192.168.72.20 -p yout[Budp --dport 53 -j ACCEPT 
+  111  iptables -P FORWARD ACCEPT
+  112  nmtui
+  113  ip a
+  114  nmcli n off
+  115  nmcli n on
+  116  ip a
+  117  ifup ens37
+  118  ip a
+  119  iptables -L
+  120  iptables -t nat -L
+  121  iptables -L
+  122  iptables -P FORWARD DROP
+  123  iptables -L
+  124  history
+  125  iptables -A FORWARD -s 20.20.20.135 -d www.cisco.com -p tcp --dport 443 -m state --state NEW,ESTABLISHED -j ACCEPT
+  126  iptables -A FORWARD -d 20.20.20.135 -s www.cisco.com -p tcp --sport 443 -m state --state NEW,ESTABLISHED -j ACCEPT
+  127  iptables -P FORWARD ACCEPT
+  128  iptables -L
+  129  iptables -P FORWARD DROP
+  130  iptables -A FORWARD -s 20.20.20.135 -d www.wikipedia.org -p tcp --dport 443 -m state --state NEW,ESTABLISHED -j ACCEPT
+  131  iptables -A FORWARD -d 20.20.20.135 -s www.wikipedia.org -p tcp --sport 443 -m state --state NEW,ESTABLISHED -j ACCEPT
+  132  iptables -L
+  133  ip a
+  134  systemctl status iptables.service 
+  135  systemctl restart iptables.service 
+  136  iptables -L
+  137  cat /proc/sys/net/ipv4/ip_forward
+  138  iptables -A FORWARD -s 20.20.20.0/24 -d 192.168.72.20 -p udp --dport 53 -j ACCEPT 
+  139  iptables -A FORWARD -d 20.20.20.0/24 -s 192.168.72.20 -p udp --sport 53 -j ACCEPT 
+  140  iptables -A FORWARD -s 20.20.20.0/24 -d 192.168.72.20 -p tcp --dport 443 -j ACCEPT 
+  141  iptables -A FORWARD -d 20.20.20.0/24 -s 192.168.72.20 -p tcp --sport 443 -j ACCEPT 
+  142  iptables -L
+  143  iptables -t nat -L
+  144  vim /etc/resolv.conf 
+  145  iptables -L
+  146  iptables -t nat -L
+  147  iptables -P FORWARD DROP
+  148  iptables -L
+  149  iptables -t nat -A POSTROUTING -s 20.20.20.0/24 -o ens33 -j MASQUERADE 
+  150  iptables -P FORWARD ACCEPT
+  151  ip a
+  152  history
+  153  cat /etc/resolv.conf 
+  154  vim /etc/resolv.conf 
+  155  iptables -F
+  156  iptables -L
+  157  iptables -A FORWARD -s 20.20.20.0/24 -d 192.168.20.2 -p udp --dport 53 -j ACCEPT
+  158  iptables -A FORWARD -d 20.20.20.0/24 -s 192.168.20.2 -p udp --sport 53 -j ACCEPT
+  159  iptables -t nat -L
+  160  iptables -L
+  161  history
+  162  iptables -A FORWARD -s 20.20.20.0/24 -d 192.168.20.2 -p udp --dport 53 -j ACCEPT
+  163  iptables -A FORWARD -d 20.20.20.0/24 -s 192.168.20.2 -p udp --sport 53 -j ACCEPT
+  164  iptables -A FORWARD -s 20.20.20.0/24 -d 192.168.20.2 -p tcp --dport 443 -j ACCEPT
+  165  iptables -A FORWARD -d 20.20.20.0/24 -s 192.168.20.2 -p tcp --sport 443 -j ACCEPT
+  166  iptables -P FORWARD DROP
+  167  iptables -A FORWARD -s 20.20.20.135 -d www.youtube.com -p tcp --dport 443 -m state --state NEW,ESTABLISHED -j ACCEPT
+  168  iptables -A FORWARD -d 20.20.20.135 -s www.youtube.com -p tcp --sport 443 -m state --state NEW,ESTABLISHED -j ACCEPT

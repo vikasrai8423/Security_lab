@@ -1,0 +1,24 @@
+alert icmp any any -> 192.168.15.154 any (msg:"large ping packet detected";dsize:>512;sid:1000001;rev:1;)
+go to kali machine --> ping -s 600 192.168.15.192
+
+alert tcp any any -> 192.168.15.154 any (msg:"Possible NMAP Scan";flow:stateless;flags:F;detection_filter:track by_src,count 10,seconds 1;sid:1000002;)
+
+sudo nmap -sF 192.168.15.154
+sudo nmap -sS 192.168.15.154
+
+
+alert tcp !192.168.15.1 any -> 192.168.15.154 8000 (msg:"Invalid access";sid:1000003;rev:1;)
+
+alert tcp any any -> 192.168.15.154 22 (msg:"Invalid SSH access";sid:1000004;)
+
+sudo ssh 192.168.15.154 (pfsense nat ip)
+
+
+alert tcp any 8000 -> $HOME_NET any (msg:"Hackers websites accessed";content:"Hacker websites!!!";nocase;sid:1000005;rev:1;)
+
+if ttl is zero than alert msg
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+alert icmp $HOME_NET any -> any any (msg:"traceroute detected"ttl:<3;sid:1000005;rev:1;)
+
+go to client vm
+ping -t 2 192.168.15.153 (kali linux ip)

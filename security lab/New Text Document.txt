@@ -1,0 +1,89 @@
+# For more information on configuration, see:
+#   * Official English Documentation: http://nginx.org/en/docs/
+#   * Official Russian Documentation: http://nginx.org/ru/docs/
+
+user nginx;
+worker_processes auto;
+error_log /var/log/nginx/error.log;
+pid /run/nginx.pid;
+
+# Load dynamic modules. See /usr/share/doc/nginx/README.dynamic.
+include /usr/share/nginx/modules/*.conf;
+
+events {
+    worker_connections 1024;
+}
+
+http {
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  /var/log/nginx/access.log  main;
+
+    sendfile            on;
+    tcp_nopush          on;
+    tcp_nodelay         on;
+    keepalive_timeout   65;
+    types_hash_max_size 4096;
+
+    include             /etc/nginx/mime.types;
+    default_type        application/octet-stream;
+
+    # Load modular configuration files from the /etc/nginx/conf.d directory.
+    # See http://nginx.org/en/docs/ngx_core_module.html#include
+    # for more information.
+    include /etc/nginx/conf.d/*.conf;
+
+#   upstream hpcsa {
+#	server 10.10.10.135 weight=4;
+##	server 10.10.10.133;
+#	}
+
+    server {
+        listen       80;
+        listen       [::]:80;
+        server_name  _;
+        root         /usr/share/nginx/html;
+
+        # Load configuration files for the default server block.
+        include /etc/nginx/default.d/*.conf;
+	
+#	location / {
+ #               proxy_pass http://hpcsa/;
+  #      }
+
+        error_page 404 /404.html;
+        location = /404.html {
+        }
+
+        error_page 500 502 503 504 /50x.html;
+        location = /50x.html {
+        }
+	location /{
+		proxy_pass http://localhost/;
+	}
+	location /acts {
+		proxy_pass http://10.10.10.133:8000/;
+	}
+	location /hpcsa {
+		proxy_pass http://10.10.10.133:9000/;
+	}
+	location /ditiss {
+		proxy_pass http://10.10.10.133:9500/;	
+	}
+	
+    }
+
+
+
+
+
+
+
+alert tcp any any -> any 8000 (msg:"virus.py downloaded";content:"virus.py";nocase;sid:1000001;rev:1;)
+alert tcp any 8000 -> $HOME_NET any (msg:"Hackers websites accessed";content:"Hacker websites!!!";nocase;sid:1000002;rev:1;)
+alert icmp any any -> 192.168.15.152 any (msg:"large ping packet detected";dsize:>256;sid:1000003;)
+alert icmp $HOME_NET any -> any any (msg:"Traceroute detected";ttl:<3;sid:1000004;)
+alert tcp any any -> 192.168.15.152 any (msg:"Possible NMAP Scan";flow:stateless;flags:S;detection_filter:track by_src,count 10,seconds 1;sid:1000005;)
+alert tcp !196.1.113.4 any -> 192.168.15.152 22 (msg:"Invalid SSH access";sid:1000006;)

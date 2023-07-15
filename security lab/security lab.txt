@@ -1,0 +1,1214 @@
+[root@master ~]# systemctl status firewalld
+● firewalld.service - firewalld - dynamic firewall daemon
+   Loaded: loaded (/usr/lib/systemd/system/firewalld.service; enabled; vendor preset: enabled)
+   Active: active (running) since Tue 2023-06-20 17:39:44 IST; 4min 8s ago
+     Docs: man:firewalld(1)
+ Main PID: 894 (firewalld)
+    Tasks: 2
+   CGroup: /system.slice/firewalld.service
+           └─894 /usr/bin/python2 -Es /usr/sbin/firewalld --nofork --nopid
+
+Jun 20 17:39:44 localhost.localdomain systemd[1]: Starting firewalld - dynami...
+Jun 20 17:39:44 localhost.localdomain systemd[1]: Started firewalld - dynamic...
+Jun 20 17:39:44 localhost.localdomain firewalld[894]: WARNING: AllowZoneDrift...
+Hint: Some lines were ellipsized, use -l to show in full.
+[root@master ~]# systemctl stop firewalld
+[root@master ~]# systemctl disable firewalld
+Removed symlink /etc/systemd/system/multi-user.target.wants/firewalld.service.
+Removed symlink /etc/systemd/system/dbus-org.fedoraproject.FirewallD1.service.
+[root@master ~]# yum search iptables
+Loaded plugins: fastestmirror, langpacks
+Loading mirror speeds from cached hostfile
+ * base: centos.mirror.net.in
+ * extras: centos.mirror.net.in
+ * updates: centos.mirror.net.in
+============================ N/S matched: iptables =============================
+iptables-devel.i686 : Development package for iptables
+iptables-devel.x86_64 : Development package for iptables
+iptables-services.x86_64 : iptables and ip6tables services for iptables
+iptables-utils.x86_64 : iptables and ip6tables services for iptables
+iptables.i686 : Tools for managing Linux kernel packet filtering capabilities
+iptables.x86_64 : Tools for managing Linux kernel packet filtering capabilities
+
+  Name and summary matches only, use "search all" for everything.
+[root@master ~]# yum install iptables-services iptables-utils
+Loaded plugins: fastestmirror, langpacks
+Loading mirror speeds from cached hostfile
+ * base: centos.mirror.net.in
+ * extras: centos.mirror.net.in
+ * updates: centos.mirror.net.in
+Resolving Dependencies
+--> Running transaction check
+---> Package iptables-services.x86_64 0:1.4.21-35.el7 will be installed
+---> Package iptables-utils.x86_64 0:1.4.21-35.el7 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+================================================================================
+ Package                  Arch          Version               Repository   Size
+================================================================================
+Installing:
+ iptables-services        x86_64        1.4.21-35.el7         base         52 k
+ iptables-utils           x86_64        1.4.21-35.el7         base         62 k
+
+Transaction Summary
+================================================================================
+Install  2 Packages
+
+Total download size: 114 k
+Installed size: 66 k
+Is this ok [y/d/N]: y
+Downloading packages:
+warning: /var/cache/yum/x86_64/7/base/packages/iptables-utils-1.4.21-35.el7.x86_64.rpm: Header V3 RSA/SHA256 Signature, key ID f4a80eb5: NOKEY
+Public key for iptables-utils-1.4.21-35.el7.x86_64.rpm is not installed
+(1/2): iptables-utils-1.4.21-35.el7.x86_64.rpm             |  62 kB   00:00     
+(2/2): iptables-services-1.4.21-35.el7.x86_64.rpm          |  52 kB   00:00     
+--------------------------------------------------------------------------------
+Total                                              355 kB/s | 114 kB  00:00     
+Retrieving key from file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+Importing GPG key 0xF4A80EB5:
+ Userid     : "CentOS-7 Key (CentOS 7 Official Signing Key) <security@centos.org>"
+ Fingerprint: 6341 ab27 53d7 8a78 a7c2 7bb1 24c6 a8a7 f4a8 0eb5
+ Package    : centos-release-7-9.2009.0.el7.centos.x86_64 (@anaconda)
+ From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+Is this ok [y/N]: y
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : iptables-utils-1.4.21-35.el7.x86_64                          1/2 
+  Installing : iptables-services-1.4.21-35.el7.x86_64                       2/2 
+  Verifying  : iptables-services-1.4.21-35.el7.x86_64                       1/2 
+  Verifying  : iptables-utils-1.4.21-35.el7.x86_64                          2/2 
+
+Installed:
+  iptables-services.x86_64 0:1.4.21-35.el7                                      
+  iptables-utils.x86_64 0:1.4.21-35.el7                                         
+
+Complete!
+[root@master ~]# systemctl start iptables
+[root@master ~]# systemctl status iptables
+● iptables.service - IPv4 firewall with iptables
+   Loaded: loaded (/usr/lib/systemd/system/iptables.service; disabled; vendor preset: disabled)
+   Active: active (exited) since Tue 2023-06-20 17:47:38 IST; 5s ago
+  Process: 11214 ExecStart=/usr/libexec/iptables/iptables.init start (code=exited, status=0/SUCCESS)
+ Main PID: 11214 (code=exited, status=0/SUCCESS)
+
+Jun 20 17:47:38 master systemd[1]: Starting IPv4 firewall with iptables...
+Jun 20 17:47:38 master iptables.init[11214]: iptables: Applying firewall rul...]
+Jun 20 17:47:38 master systemd[1]: Started IPv4 firewall with iptables.
+Hint: Some lines were ellipsized, use -l to show in full.
+[root@master ~]# systemctl enable iptables
+Created symlink from /etc/systemd/system/basic.target.wants/iptables.service to /usr/lib/systemd/system/iptables.service.
+[root@master ~]# iptables -L
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+ACCEPT     all  --  anywhere             anywhere             state RELATED,ESTABLISHED
+ACCEPT     icmp --  anywhere             anywhere            
+ACCEPT     all  --  anywhere             anywhere            
+ACCEPT     tcp  --  anywhere             anywhere             state NEW tcp dpt:ssh
+REJECT     all  --  anywhere             anywhere             reject-with icmp-host-prohibited
+
+Chain FORWARD (policy ACCEPT)
+target     prot opt source               destination         
+REJECT     all  --  anywhere             anywhere             reject-with icmp-host-prohibited
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+[root@master ~]# iptables -t filter -L
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+ACCEPT     all  --  anywhere             anywhere             state RELATED,ESTABLISHED
+ACCEPT     icmp --  anywhere             anywhere            
+ACCEPT     all  --  anywhere             anywhere            
+ACCEPT     tcp  --  anywhere             anywhere             state NEW tcp dpt:ssh
+REJECT     all  --  anywhere             anywhere             reject-with icmp-host-prohibited
+
+Chain FORWARD (policy ACCEPT)
+target     prot opt source               destination         
+REJECT     all  --  anywhere             anywhere             reject-with icmp-host-prohibited
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+[root@master ~]# iptables -t nat -L
+Chain PREROUTING (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain POSTROUTING (policy ACCEPT)
+target     prot opt source               destination         
+[root@master ~]# iptables -t mangle -L
+Chain PREROUTING (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain FORWARD (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain POSTROUTING (policy ACCEPT)
+target     prot opt source               destination         
+[root@master ~]# iptables -t raw -L
+Chain PREROUTING (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+[root@master ~]# iptables --flush 
+[root@master ~]# iptables -F
+[root@master ~]# iptables -L
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain FORWARD (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+[root@master ~]# systemctl restart iptables
+[root@master ~]# iptables -L
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+ACCEPT     all  --  anywhere             anywhere             state RELATED,ESTABLISHED
+ACCEPT     icmp --  anywhere             anywhere            
+ACCEPT     all  --  anywhere             anywhere            
+ACCEPT     tcp  --  anywhere             anywhere             state NEW tcp dpt:ssh
+REJECT     all  --  anywhere             anywhere             reject-with icmp-host-prohibited
+
+Chain FORWARD (policy ACCEPT)
+target     prot opt source               destination         
+REJECT     all  --  anywhere             anywhere             reject-with icmp-host-prohibited
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+[root@master ~]# iptables -F
+[root@master ~]# iptables -L
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain FORWARD (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+[root@master ~]# iptables -P FORWARD DROP 
+[root@master ~]# iptables -L
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain FORWARD (policy DROP)
+target     prot opt source               destination         
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+[root@master ~]# 
+[root@master ~]# cat /proc/sys/net/ipv4/ip
+ip_default_ttl           ip_forward               ipfrag_low_thresh        ipfrag_time              ip_nonlocal_bind
+ip_dynaddr               ip_forward_use_pmtu      ipfrag_max_dist          ip_local_port_range      ip_no_pmtu_disc
+ip_early_demux           ipfrag_high_thresh       ipfrag_secret_interval   ip_local_reserved_ports  
+[root@master ~]# cat /proc/sys/net/ipv4/ip_forward
+1
+[root@master ~]# vi /etc/sysctl.conf 
+[root@master ~]# systemctl status iptables
+● iptables.service - IPv4 firewall with iptables
+   Loaded: loaded (/usr/lib/systemd/system/iptables.service; enabled; vendor preset: disabled)
+   Active: active (exited) since Tue 2023-06-20 17:56:55 IST; 1 day 1h ago
+  Process: 11494 ExecStop=/usr/libexec/iptables/iptables.init stop (code=exited, status=0/SUCCESS)
+  Process: 11531 ExecStart=/usr/libexec/iptables/iptables.init start (code=exited, status=0/SUCCESS)
+ Main PID: 11531 (code=exited, status=0/SUCCESS)
+    Tasks: 0
+   CGroup: /system.slice/iptables.service
+
+Jun 20 17:56:55 master systemd[1]: Starting IPv4 firewall with iptables...
+Jun 20 17:56:55 master iptables.init[11531]: iptables: Applying firewall rules: [  OK  ]
+Jun 20 17:56:55 master systemd[1]: Started IPv4 firewall with iptables.
+[root@master ~]# iptables -F
+[root@master ~]# iptables -t nat -A POSTROUTING -s 10.10.10.0/24 -o ens33 -j MASQUERADE 
+[root@master ~]# iptables -t nat -L
+Chain PREROUTING (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain POSTROUTING (policy ACCEPT)
+target     prot opt source               destination         
+MASQUERADE  all  --  10.10.10.0/24        anywhere            
+[root@master ~]# iptables -L
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain FORWARD (policy DROP)
+target     prot opt source               destination         
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+[root@master ~]# iptables FORWARD ACCEPT
+Bad argument `FORWARD'
+Try `iptables -h' or 'iptables --help' for more information.
+[root@master ~]# iptables -P FORWARD ACCEPT
+[root@master ~]# iptables -L
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain FORWARD (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+[root@master ~]# iptables -P FORWARD DROP
+[root@master ~]# iptables -L
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain FORWARD (policy DROP)
+target     prot opt source               destination         
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+[root@master ~]# iptables -A FORWARD -s 10.10.10.0/24 -d 192.168.15.2 -p udp --dport 53 -j ACCEPT 
+[root@master ~]# iptables -A FORWARD -d 10.10.10.0/24 -s 192.168.15.2 -p udp --dport 53 -j ACCEPT 
+[root@master ~]# iptables -A FORWARD -d 10.10.10.0/24 -s 192.168.15.2 -p udp --sport 53 -j ACCEPT 
+[root@master ~]# iptables
+iptables v1.4.21: no command specified
+Try `iptables -h' or 'iptables --help' for more information.
+[root@master ~]# iptables -L
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain FORWARD (policy DROP)
+target     prot opt source               destination         
+ACCEPT     udp  --  10.10.10.0/24        gateway              udp dpt:domain
+ACCEPT     udp  --  gateway              10.10.10.0/24        udp dpt:domain
+ACCEPT     udp  --  gateway              10.10.10.0/24        udp spt:domain
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+[root@master ~]# iptables -F
+[root@master ~]# iptables -A FORWARD -d 10.10.10.0/24 -s 192.168.15.2 -p udp --sport 53 -j ACCEPT 
+[root@master ~]# iptables -A FORWARD -s 10.10.10.0/24 -d 192.168.15.2 -p udp --dport 53 -j ACCEPT 
+[root@master ~]# iptables -L
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain FORWARD (policy DROP)
+target     prot opt source               destination         
+ACCEPT     udp  --  gateway              10.10.10.0/24        udp spt:domain
+ACCEPT     udp  --  10.10.10.0/24        gateway              udp dpt:domain
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+[root@master ~]# ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: ens33: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 00:0c:29:69:cb:51 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.15.151/24 brd 192.168.15.255 scope global noprefixroute dynamic ens33
+       valid_lft 1664sec preferred_lft 1664sec
+    inet6 fe80::3d22:895a:a56a:4b06/64 scope link noprefixroute 
+       valid_lft forever preferred_lft forever
+3: ens34: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 00:0c:29:69:cb:5b brd ff:ff:ff:ff:ff:ff
+    inet 10.10.10.128/24 brd 10.10.10.255 scope global noprefixroute dynamic ens34
+       valid_lft 1672sec preferred_lft 1672sec
+    inet6 fe80::92e4:5fd:4c8f:20a/64 scope link noprefixroute 
+       valid_lft forever preferred_lft forever
+4: virbr0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default qlen 1000
+    link/ether 52:54:00:16:df:82 brd ff:ff:ff:ff:ff:ff
+5: virbr0-nic: <BROADCAST,MULTICAST> mtu 1500 qdisc pfifo_fast master virbr0 state DOWN group default qlen 1000
+    link/ether 52:54:00:16:df:82 brd ff:ff:ff:ff:ff:ff
+[root@master ~]# iptables -A FORWARD -s 10.10.10.0/24 -d www.google.com --dport 443 -j ACCEPT 
+iptables v1.4.21: unknown option "--dport"
+Try `iptables -h' or 'iptables --help' for more information.
+[root@master ~]# iptables -L
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain FORWARD (policy DROP)
+target     prot opt source               destination         
+ACCEPT     udp  --  gateway              10.10.10.0/24        udp spt:domain
+ACCEPT     udp  --  10.10.10.0/24        gateway              udp dpt:domain
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+[root@master ~]# iptables -A FORWARD -s 10.10.10.0/24 -d www.google.com -p tcp --dport 443 -j ACCEPT 
+[root@master ~]# iptables -A FORWARD -d 10.10.10.0/24 -s www.google.com -p tcp --sport 443 -j ACCEPT 
+[root@master ~]# iptables -L
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain FORWARD (policy DROP)
+target     prot opt source               destination         
+ACCEPT     udp  --  gateway              10.10.10.0/24        udp spt:domain
+ACCEPT     udp  --  10.10.10.0/24        gateway              udp dpt:domain
+ACCEPT     tcp  --  10.10.10.0/24        bom12s13-in-f4.1e100.net  tcp dpt:https
+ACCEPT     tcp  --  bom12s13-in-f4.1e100.net  10.10.10.0/24        tcp spt:https
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+[root@master ~]# iptables -L
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain FORWARD (policy DROP)
+target     prot opt source               destination         
+ACCEPT     udp  --  gateway              10.10.10.0/24        udp spt:domain
+ACCEPT     udp  --  10.10.10.0/24        gateway              udp dpt:domain
+ACCEPT     tcp  --  10.10.10.0/24        bom12s13-in-f4.1e100.net  tcp dpt:https
+ACCEPT     tcp  --  bom12s13-in-f4.1e100.net  10.10.10.0/24        tcp spt:https
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+[root@master ~]# service iptables save
+iptables: Saving firewall rules to /etc/sysconfig/iptables:[  OK  ]
+[root@master ~]# iptables -L
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain FORWARD (policy DROP)
+target     prot opt source               destination         
+ACCEPT     udp  --  gateway              10.10.10.0/24        udp spt:domain
+ACCEPT     udp  --  10.10.10.0/24        gateway              udp dpt:domain
+ACCEPT     tcp  --  10.10.10.0/24        bom12s13-in-f4.1e100.net  tcp dpt:https
+ACCEPT     tcp  --  bom12s13-in-f4.1e100.net  10.10.10.0/24        tcp spt:https
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+[root@master ~]# iptables -A FORWARD -s 10.10.10.130 -d www.youtube.com -p tcp --dport=443 -j ACCEPT
+[root@master ~]# iptables -A FORWARD -d 10.10.10.130 -s www.youtube.com -p tcp --sport=443 -j ACCEPT
+[root@master ~]# iptables -L
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain FORWARD (policy DROP)
+target     prot opt source               destination         
+ACCEPT     udp  --  gateway              10.10.10.0/24        udp spt:domain
+ACCEPT     udp  --  10.10.10.0/24        gateway              udp dpt:domain
+ACCEPT     tcp  --  10.10.10.0/24        bom12s13-in-f4.1e100.net  tcp dpt:https
+ACCEPT     tcp  --  bom12s13-in-f4.1e100.net  10.10.10.0/24        tcp spt:https
+ACCEPT     tcp  --  10.10.10.130         bom12s18-in-f14.1e100.net  tcp dpt:https
+ACCEPT     tcp  --  10.10.10.130         bom07s18-in-f14.1e100.net  tcp dpt:https
+ACCEPT     tcp  --  10.10.10.130         bom07s15-in-f14.1e100.net  tcp dpt:https
+ACCEPT     tcp  --  10.10.10.130         bom12s16-in-f14.1e100.net  tcp dpt:https
+ACCEPT     tcp  --  10.10.10.130         bom12s15-in-f14.1e100.net  tcp dpt:https
+ACCEPT     tcp  --  10.10.10.130         bom12s17-in-f14.1e100.net  tcp dpt:https
+ACCEPT     tcp  --  10.10.10.130         bom12s20-in-f14.1e100.net  tcp dpt:https
+ACCEPT     tcp  --  10.10.10.130         bom12s11-in-f14.1e100.net  tcp dpt:https
+ACCEPT     tcp  --  10.10.10.130         bom12s13-in-f14.1e100.net  tcp dpt:https
+ACCEPT     tcp  --  10.10.10.130         bom12s14-in-f14.1e100.net  tcp dpt:https
+ACCEPT     tcp  --  10.10.10.130         bom12s21-in-f14.1e100.net  tcp dpt:https
+ACCEPT     tcp  --  10.10.10.130         bom12s12-in-f14.1e100.net  tcp dpt:https
+ACCEPT     tcp  --  10.10.10.130         bom12s19-in-f14.1e100.net  tcp dpt:https
+ACCEPT     tcp  --  10.10.10.130         bom12s09-in-f14.1e100.net  tcp dpt:https
+ACCEPT     tcp  --  10.10.10.130         bom07s16-in-f14.1e100.net  tcp dpt:https
+ACCEPT     tcp  --  10.10.10.130         bom07s20-in-f14.1e100.net  tcp dpt:https
+ACCEPT     tcp  --  bom12s15-in-f14.1e100.net  10.10.10.130         tcp spt:https
+ACCEPT     tcp  --  bom12s21-in-f14.1e100.net  10.10.10.130         tcp spt:https
+ACCEPT     tcp  --  bom07s24-in-f14.1e100.net  10.10.10.130         tcp spt:https
+ACCEPT     tcp  --  bom12s11-in-f14.1e100.net  10.10.10.130         tcp spt:https
+ACCEPT     tcp  --  bom12s13-in-f14.1e100.net  10.10.10.130         tcp spt:https
+ACCEPT     tcp  --  bom12s18-in-f14.1e100.net  10.10.10.130         tcp spt:https
+ACCEPT     tcp  --  bom12s19-in-f14.1e100.net  10.10.10.130         tcp spt:https
+ACCEPT     tcp  --  bom12s14-in-f14.1e100.net  10.10.10.130         tcp spt:https
+ACCEPT     tcp  --  bom12s16-in-f14.1e100.net  10.10.10.130         tcp spt:https
+ACCEPT     tcp  --  bom07s29-in-f14.1e100.net  10.10.10.130         tcp spt:https
+ACCEPT     tcp  --  bom12s20-in-f14.1e100.net  10.10.10.130         tcp spt:https
+ACCEPT     tcp  --  bom12s17-in-f14.1e100.net  10.10.10.130         tcp spt:https
+ACCEPT     tcp  --  bom07s15-in-f14.1e100.net  10.10.10.130         tcp spt:https
+ACCEPT     tcp  --  bom07s16-in-f14.1e100.net  10.10.10.130         tcp spt:https
+ACCEPT     tcp  --  bom07s28-in-f14.1e100.net  10.10.10.130         tcp spt:https
+ACCEPT     tcp  --  bom12s12-in-f14.1e100.net  10.10.10.130         tcp spt:https
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+[root@master ~]# iptables -A FORWARD -s 10.10.10.130 -d www.microsoft.com -p tcp --dport=443 -j ACCEPT
+[root@master ~]# iptables -A FORWARD -d 10.10.10.130 -s www.microsoft.com -p tcp --sport=443 -j ACCEPT
+[root@master ~]# iptables -L
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain FORWARD (policy DROP)
+target     prot opt source               destination         
+ACCEPT     udp  --  gateway              10.10.10.0/24        udp spt:domain
+ACCEPT     udp  --  10.10.10.0/24        gateway              udp dpt:domain
+ACCEPT     tcp  --  10.10.10.0/24        bom12s13-in-f4.1e100.net  tcp dpt:https
+ACCEPT     tcp  --  bom12s13-in-f4.1e100.net  10.10.10.0/24        tcp spt:https
+ACCEPT     tcp  --  10.10.10.130         bom12s18-in-f14.1e100.net  tcp dpt:https
+ACCEPT     tcp  --  10.10.10.130         bom07s18-in-f14.1e100.net  tcp dpt:https
+ACCEPT     tcp  --  10.10.10.130         bom07s15-in-f14.1e100.net  tcp dpt:https
+ACCEPT     tcp  --  10.10.10.130         bom12s16-in-f14.1e100.net  tcp dpt:https
+ACCEPT     tcp  --  10.10.10.130         bom12s15-in-f14.1e100.net  tcp dpt:https
+ACCEPT     tcp  --  10.10.10.130         bom12s17-in-f14.1e100.net  tcp dpt:https
+ACCEPT     tcp  --  10.10.10.130         bom12s20-in-f14.1e100.net  tcp dpt:https
+ACCEPT     tcp  --  10.10.10.130         bom12s11-in-f14.1e100.net  tcp dpt:https
+ACCEPT     tcp  --  10.10.10.130         bom12s13-in-f14.1e100.net  tcp dpt:https
+ACCEPT     tcp  --  10.10.10.130         bom12s14-in-f14.1e100.net  tcp dpt:https
+ACCEPT     tcp  --  10.10.10.130         bom12s21-in-f14.1e100.net  tcp dpt:https
+ACCEPT     tcp  --  10.10.10.130         bom12s12-in-f14.1e100.net  tcp dpt:https
+ACCEPT     tcp  --  10.10.10.130         bom12s19-in-f14.1e100.net  tcp dpt:https
+ACCEPT     tcp  --  10.10.10.130         bom12s09-in-f14.1e100.net  tcp dpt:https
+ACCEPT     tcp  --  10.10.10.130         bom07s16-in-f14.1e100.net  tcp dpt:https
+ACCEPT     tcp  --  10.10.10.130         bom07s20-in-f14.1e100.net  tcp dpt:https
+ACCEPT     tcp  --  bom12s15-in-f14.1e100.net  10.10.10.130         tcp spt:https
+ACCEPT     tcp  --  bom12s21-in-f14.1e100.net  10.10.10.130         tcp spt:https
+ACCEPT     tcp  --  bom07s24-in-f14.1e100.net  10.10.10.130         tcp spt:https
+ACCEPT     tcp  --  bom12s11-in-f14.1e100.net  10.10.10.130         tcp spt:https
+ACCEPT     tcp  --  bom12s13-in-f14.1e100.net  10.10.10.130         tcp spt:https
+ACCEPT     tcp  --  bom12s18-in-f14.1e100.net  10.10.10.130         tcp spt:https
+ACCEPT     tcp  --  bom12s19-in-f14.1e100.net  10.10.10.130         tcp spt:https
+ACCEPT     tcp  --  bom12s14-in-f14.1e100.net  10.10.10.130         tcp spt:https
+ACCEPT     tcp  --  bom12s16-in-f14.1e100.net  10.10.10.130         tcp spt:https
+ACCEPT     tcp  --  bom07s29-in-f14.1e100.net  10.10.10.130         tcp spt:https
+ACCEPT     tcp  --  bom12s20-in-f14.1e100.net  10.10.10.130         tcp spt:https
+ACCEPT     tcp  --  bom12s17-in-f14.1e100.net  10.10.10.130         tcp spt:https
+ACCEPT     tcp  --  bom07s15-in-f14.1e100.net  10.10.10.130         tcp spt:https
+ACCEPT     tcp  --  bom07s16-in-f14.1e100.net  10.10.10.130         tcp spt:https
+ACCEPT     tcp  --  bom07s28-in-f14.1e100.net  10.10.10.130         tcp spt:https
+ACCEPT     tcp  --  bom12s12-in-f14.1e100.net  10.10.10.130         tcp spt:https
+ACCEPT     tcp  --  10.10.10.130         a23-32-177-236.deploy.static.akamaitechnologies.com  tcp dpt:https
+ACCEPT     tcp  --  a23-210-77-221.deploy.static.akamaitechnologies.com  10.10.10.130         tcp spt:https
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+[root@master ~]# 
+[root@master ~]# 
+[root@master ~]# 
+[root@master ~]# 
+[root@master ~]# 
+[root@master ~]# nslookup www.microsoft.com
+Server:		192.168.15.2
+Address:	192.168.15.2#53
+
+Non-authoritative answer:
+www.microsoft.com	canonical name = www.microsoft.com-c-3.edgekey.net.
+www.microsoft.com-c-3.edgekey.net	canonical name = www.microsoft.com-c-3.edgekey.net.globalredir.akadns.net.
+www.microsoft.com-c-3.edgekey.net.globalredir.akadns.net	canonical name = e13678.dscb.akamaiedge.net.
+Name:	e13678.dscb.akamaiedge.net
+Address: 23.32.177.236
+Name:	e13678.dscb.akamaiedge.net
+Address: 2600:1417:75:ca5::356e
+Name:	e13678.dscb.akamaiedge.net
+Address: 2600:1417:75:ca1::356e
+
+[root@master ~]# nslookup www.microsoft.com
+Server:		192.168.15.2
+Address:	192.168.15.2#53
+
+Non-authoritative answer:
+www.microsoft.com	canonical name = www.microsoft.com-c-3.edgekey.net.
+www.microsoft.com-c-3.edgekey.net	canonical name = www.microsoft.com-c-3.edgekey.net.globalredir.akadns.net.
+www.microsoft.com-c-3.edgekey.net.globalredir.akadns.net	canonical name = e13678.dscb.akamaiedge.net.
+Name:	e13678.dscb.akamaiedge.net
+Address: 23.32.177.236
+Name:	e13678.dscb.akamaiedge.net
+Address: 2600:1417:75:ca5::356e
+Name:	e13678.dscb.akamaiedge.net
+Address: 2600:1417:75:ca1::356e
+
+[root@master ~]# curl https://www.microsoft.com
+<html><head><title>Microsoft Corporation</title><meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7"></meta><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta><meta name="SearchTitle" content="Microsoft.com" scheme=""></meta><meta name="Description" content="Get product information, support, and news from Microsoft." scheme=""></meta><meta name="Title" content="Microsoft.com Home Page" scheme=""></meta><meta name="Keywords" content="Microsoft, product, support, help, training, Office, Windows, software, download, trial, preview, demo,  business, security, update, free, computer, PC, server, search, download, install, news" scheme=""></meta><meta name="SearchDescription" content="Microsoft.com Homepage" scheme=""></meta></head><body><p>Your current User-Agent string appears to be from an automated process, if this is incorrect, please click this link:<a href="http://www.microsoft.com/en/us/default.aspx?redir=true">United States English Microsoft Homepage</a></p></body></html>
+[root@master ~]# iptables -A FORWARD -s 10.10.10.130 -d 184.29.24.235 -p tcp --dport=443 -j ACCEPT
+[root@master ~]# iptables -A FORWARD -d 10.10.10.130 -s 184.29.24.235 -p tcp --sport=443 -j ACCEPT
+[root@master ~]# iptables -A FORWARD -s 10.10.10.130 -d www.cisco.com -p tcp --dport=443 -j ACCEPT
+[root@master ~]# iptables -A FORWARD -d 10.10.10.130 -s www.cisco.com -p tcp --sport=443 -j ACCEPT
+[root@master ~]# iptables -A FORWARD -s 10.10.10.130 -d 104.80.48.82 -p tcp --dport=443 -j ACCEPT
+[root@master ~]# iptables -A FORWARD -d 10.10.10.130 -s 104.80.48.82 -p tcp --sport=443 -j ACCEPT
+[root@master ~]# iptables -A FORWARD -s 10.10.10.130 -d www.aws.amazon.com -p tcp --dport=443 -j ACCEPT
+[root@master ~]# iptables -A FORWARD -d 10.10.10.130 -s www.aws.amazon.com -p tcp --sport=443 -j ACCEPT
+[root@master ~]# iptables -A FORWARD -s 10.10.10.132 -d azure.microsoft.com -p tcp --dport=443 -j ACCEPT
+[root@master ~]# iptables -A FORWARD -d 10.10.10.132 -s azure.microsoft.com -p tcp --sport=443 -j ACCEPT
+[root@master ~]# iptables -A FORWARD -s 10.10.10.132 -d 23.35.91.153 -p tcp --dport=443 -j ACCEPT
+[root@master ~]# iptables -A FORWARD -d 10.10.10.132 -s 23.35.91.153 -p tcp --sport=443 -j ACCEPT
+[root@master ~]# iptables -A FORWARD -s 10.10.10.132 -d www.heroku.com -p tcp --dport=443 -j ACCEPT
+[root@master ~]# iptables -A FORWARD -d 10.10.10.132 -s www.heroku.com -p tcp --sport=443 -j ACCEPT
+[root@master ~]# iptables -A FORWARD -s 10.10.10.132 -d www.redhat.com -p tcp --dport=443 -j ACCEPT
+[root@master ~]# iptables -A FORWARD -d 10.10.10.132 -s www.redhat.com -p tcp --sport=443 -j ACCEPT
+[root@master ~]# iptables -A FORWARD -s 10.10.10.132 -d 23.10.228.171 -p tcp --dport=443 -j ACCEPT
+[root@master ~]# iptables -A FORWARD -d 10.10.10.132 -s 23.10.228.171 -p tcp --sport=443 -j ACCEPT
+[root@master ~]# iptables -A FORWARD -s 10.10.10.132 -d 96.6.35.160 -p tcp --dport=443 -j ACCEPT
+[root@master ~]# iptables -A FORWARD -d 10.10.10.132 -s 96.6.35.160 -p tcp --sport=443 -j ACCEPT
+[root@master ~]# iptables -A FORWARD -s 10.10.10.132 -d 108.159.61.84 -p tcp --dport=443 -j ACCEPT
+[root@master ~]# iptables -A FORWARD -d 10.10.10.132 -s 108.159.61.84 -p tcp --sport=443 -j ACCEPT
+[root@master ~]# iptables -A FORWARD -s 10.10.10.0 -d www.google.com -p tcp --dport=443 -j ACCEPT
+[root@master ~]# iptables -A FORWARD -s 10.10.10.0/24 -d www.google.com -p tcp --dport=443 -j ACCEPT
+[root@master ~]# iptables -A FORWARD -d 10.10.10.0/24 -s www.google.com -p tcp --sport=443 -j ACCEPT
+[root@master ~]# iptables -A FORWARD -s 10.10.10.0/24 -d www.wikipedia.com -p tcp --dport=443 -j ACCEPT
+[root@master ~]# iptables -A FORWARD -d 10.10.10.0/24 -s www.wikipedia.com -p tcp --sport=443 -j ACCEPT
+[root@master ~]# nslookup www.wikipedia.com
+Server:		192.168.15.2
+Address:	192.168.15.2#53
+
+Non-authoritative answer:
+www.wikipedia.com	canonical name = ncredir-lb.wikimedia.org.
+Name:	ncredir-lb.wikimedia.org
+Address: 103.102.166.226
+Name:	ncredir-lb.wikimedia.org
+Address: 2001:df2:e500:ed1a::3
+
+[root@master ~]# iptables -A FORWARD -s 10.10.10.0/24 -d 103.102.166.226 -p tcp --dport=443 -j ACCEPT
+[root@master ~]# iptables -A FORWARD -d 10.10.10.0/24 -s 103.102.166.226 -p tcp --sport=443 -j ACCEPT
+[root@master ~]# iptables -A FORWARD -s 10.10.10.0/24 -d www.wikipedia.org -p tcp --dport=443 -j ACCEPT
+[root@master ~]# iptables -A FORWARD -d 10.10.10.0/24 -s www.wikipedia.org -p tcp --sport=443 -j ACCEPT
+[root@master ~]# iptables -A FORWARD -s 10.10.10.0/24 -d www.centos.org -p tcp --dport=443 -j ACCEPT
+[root@master ~]# iptables -A FORWARD -d 10.10.10.0/24 -s www.centos.org -p tcp --sport=443 -j ACCEPT
+[root@master ~]# iptables -F
+[root@master ~]# iptables -L
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain FORWARD (policy DROP)
+target     prot opt source               destination         
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+[root@master ~]# iptables -A FORWARD -s 10.10.10.130 -d www.youtube -p tcp --dport 443 -m state --state NEW,ESTABLISHED -j ACCEPT 
+iptables v1.4.21: host/network `www.youtube' not found
+Try `iptables -h' or 'iptables --help' for more information.
+[root@master ~]# iptables -A FORWARD -s 10.10.10.130 -d www.youtube.com -p tcp --dport 443 -m state --state NEW,ESTABLISHED -j ACCEPT 
+[root@master ~]# iptables -A FORWARD -d 10.10.10.130 -s www.youtube.com -p tcp --sport 443 -m state --state NEW,ESTABLISHED -j ACCEPT 
+[root@master ~]# iptables -F
+[root@master ~]# iptables -A FORWARD -s 10.10.10.0/24 -d 192.168.15.2 -p udp --dport 53 -j ACCEPT 
+[root@master ~]# iptables -A FORWARD -d 10.10.10.0/24 -s 192.168.15.2 -p udp --sport 53 -j ACCEPT 
+[root@master ~]# iptables -A FORWARD -s 10.10.10.130 -d www.youtube.com -p tcp --dport 443 -m state --state NEW,ESTABLISHED -j ACCEPT 
+[root@master ~]# iptables -A FORWARD -d 10.10.10.130 -s www.youtube.com -p tcp --sport 443 -m state --state NEW,ESTABLISHED -j ACCEPT 
+[root@master ~]# iptables -A FORWARD -s 10.10.10.132 -d www.youtube.com -p tcp --dport 443 -m state --state NEW,ESTABLISHED -j ACCEPT 
+[root@master ~]# iptables -A FORWARD -d 10.10.10.132 -s www.youtube.com -p tcp --sport 443 -m state --state NEW,ESTABLISHED -j ACCEPT 
+[root@master ~]# ipt
+iptables          iptables-restore  iptables-save     iptables-xml      iptc              iptunnel          
+[root@master ~]# iptables -L
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain FORWARD (policy DROP)
+target     prot opt source               destination         
+ACCEPT     udp  --  10.10.10.0/24        gateway              udp dpt:domain
+ACCEPT     udp  --  gateway              10.10.10.0/24        udp spt:domain
+ACCEPT     tcp  --  10.10.10.130         bom07s29-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s35-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s16-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom12s18-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s15-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s20-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s32-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom12s20-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s30-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s25-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom12s19-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s28-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s36-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s37-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s31-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s33-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s33-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s29-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s35-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s16-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom12s18-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s15-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s20-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s32-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom12s20-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s30-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s25-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom12s19-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s28-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s36-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s37-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s31-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s25-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s37-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s32-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s29-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom12s18-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s20-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s35-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s28-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom12s19-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s16-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom12s20-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s30-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s33-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s31-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s36-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s15-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s35-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s28-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom12s19-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s16-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom12s20-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s30-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s33-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s31-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s36-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s15-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s25-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s37-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s32-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s29-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom12s18-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s20-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+[root@master ~]# history
+    1  ip a
+    2  ifup ens34
+    3  ip a
+    4  hostnamectl set-hostname master
+    5  systemctl status firewalld
+    6  systemctl stop firewalld
+    7  systemctl disable firewalld
+    8  yum search iptables
+    9* yum install iptables-services iptables-utils 
+   10  systemctl start iptables
+   11  systemctl status iptables
+   12  systemctl enable iptables
+   13  iptables -L
+   14  iptables -t filter -L
+   15  iptables -t nat -L
+   16  iptables -t mangle -L
+   17  iptables -t raw -L
+   18  iptables --flush 
+   19  iptables -F
+   20  iptables -L
+   21  systemctl restart iptables
+   22  iptables -L
+   23  iptables -F
+   24  iptables -L
+   25  iptables -P FORWARD DROP 
+   26  iptables -L
+   27  cat /proc/sys/net/ipv4/ip_forward
+   28  vi /etc/sysctl.conf 
+   29  systemctl status iptables
+   30  iptables -F
+   31  iptables -t nat -A POSTROUTING -s 10.10.10.0/24 -o ens33 -j MASQUERADE 
+   32  iptables -t nat -L
+   33  iptables -L
+   34  iptables FORWARD ACCEPT
+   35  iptables -P FORWARD ACCEPT
+   36  iptables -L
+   37  iptables -P FORWARD DROP
+   38  iptables -L
+   39  iptables -A FORWARD -s 10.10.10.0/24 -d 192.168.15.2 -p udp --dport 53 -j ACCEPT 
+   40  iptables -A FORWARD -d 10.10.10.0/24 -s 192.168.15.2 -p udp --dport 53 -j ACCEPT 
+   41  iptables -A FORWARD -d 10.10.10.0/24 -s 192.168.15.2 -p udp --sport 53 -j ACCEPT 
+   42  iptables
+   43  iptables -L
+   44  iptables -F
+   45  iptables -A FORWARD -d 10.10.10.0/24 -s 192.168.15.2 -p udp --sport 53 -j ACCEPT 
+   46  iptables -A FORWARD -s 10.10.10.0/24 -d 192.168.15.2 -p udp --dport 53 -j ACCEPT 
+   47  iptables -L
+   48  ip a
+   49  iptables -A FORWARD -s 10.10.10.0/24 -d www.google.com --dport 443 -j ACCEPT 
+   50  iptables -L
+   51  iptables -A FORWARD -s 10.10.10.0/24 -d www.google.com -p tcp --dport 443 -j ACCEPT 
+   52  iptables -A FORWARD -d 10.10.10.0/24 -s www.google.com -p tcp --sport 443 -j ACCEPT 
+   53  iptables -L
+   54  service iptables save
+   55  iptables -L
+   56  iptables -A FORWARD -s 10.10.10.130 -d www.youtube.com -p tcp --dport=443 -j ACCEPT
+   57  iptables -A FORWARD -d 10.10.10.130 -s www.youtube.com -p tcp --sport=443 -j ACCEPT
+   58  iptables -L
+   59  iptables -A FORWARD -s 10.10.10.130 -d www.microsoft.com -p tcp --dport=443 -j ACCEPT
+   60  iptables -A FORWARD -d 10.10.10.130 -s www.microsoft.com -p tcp --sport=443 -j ACCEPT
+   61  iptables -L
+   62  nslookup www.microsoft.com
+   63  curl https://www.microsoft.com
+   64  iptables -A FORWARD -s 10.10.10.130 -d 184.29.24.235 -p tcp --dport=443 -j ACCEPT
+   65  iptables -A FORWARD -d 10.10.10.130 -s 184.29.24.235 -p tcp --sport=443 -j ACCEPT
+   66* 
+   67  iptables -A FORWARD -d 10.10.10.130 -s www.cisco.com -p tcp --sport=443 -j ACCEPT
+   68  iptables -A FORWARD -s 10.10.10.130 -d 104.80.48.82 -p tcp --dport=443 -j ACCEPT
+   69  iptables -A FORWARD -d 10.10.10.130 -s 104.80.48.82 -p tcp --sport=443 -j ACCEPT
+   70  iptables -A FORWARD -s 10.10.10.130 -d www.aws.amazon.com -p tcp --dport=443 -j ACCEPT
+   71  iptables -A FORWARD -d 10.10.10.130 -s www.aws.amazon.com -p tcp --sport=443 -j ACCEPT
+   72  iptables -A FORWARD -s 10.10.10.132 -d azure.microsoft.com -p tcp --dport=443 -j ACCEPT
+   73  iptables -A FORWARD -d 10.10.10.132 -s azure.microsoft.com -p tcp --sport=443 -j ACCEPT
+   74  iptables -A FORWARD -s 10.10.10.132 -d 23.35.91.153 -p tcp --dport=443 -j ACCEPT
+   75  iptables -A FORWARD -d 10.10.10.132 -s 23.35.91.153 -p tcp --sport=443 -j ACCEPT
+   76  iptables -A FORWARD -s 10.10.10.132 -d www.heroku.com -p tcp --dport=443 -j ACCEPT
+   77  iptables -A FORWARD -d 10.10.10.132 -s www.heroku.com -p tcp --sport=443 -j ACCEPT
+   78  iptables -A FORWARD -s 10.10.10.132 -d www.redhat.com -p tcp --dport=443 -j ACCEPT
+   79  iptables -A FORWARD -d 10.10.10.132 -s www.redhat.com -p tcp --sport=443 -j ACCEPT
+   80  iptables -A FORWARD -s 10.10.10.132 -d 23.10.228.171 -p tcp --dport=443 -j ACCEPT
+   81  iptables -A FORWARD -d 10.10.10.132 -s 23.10.228.171 -p tcp --sport=443 -j ACCEPT
+   82  iptables -A FORWARD -s 10.10.10.132 -d 96.6.35.160 -p tcp --dport=443 -j ACCEPT
+   83  iptables -A FORWARD -d 10.10.10.132 -s 96.6.35.160 -p tcp --sport=443 -j ACCEPT
+   84  iptables -A FORWARD -s 10.10.10.132 -d 108.159.61.84 -p tcp --dport=443 -j ACCEPT
+   85  iptables -A FORWARD -d 10.10.10.132 -s 108.159.61.84 -p tcp --sport=443 -j ACCEPT
+   86  iptables -A FORWARD -s 10.10.10.0 -d www.google.com -p tcp --dport=443 -j ACCEPT
+   87  iptables -A FORWARD -s 10.10.10.0/24 -d www.google.com -p tcp --dport=443 -j ACCEPT
+   88  iptables -A FORWARD -d 10.10.10.0/24 -s www.google.com -p tcp --sport=443 -j ACCEPT
+   89  iptables -A FORWARD -s 10.10.10.0/24 -d www.wikipedia.com -p tcp --dport=443 -j ACCEPT
+   90* 
+   91  nslookup www.wikipedia.com
+   92  iptables -A FORWARD -s 10.10.10.0/24 -d 103.102.166.226 -p tcp --dport=443 -j ACCEPT
+   93  iptables -A FORWARD -d 10.10.10.0/24 -s 103.102.166.226 -p tcp --sport=443 -j ACCEPT
+   94  iptables -A FORWARD -s 10.10.10.0/24 -d www.wikipedia.org -p tcp --dport=443 -j ACCEPT
+   95  iptables -A FORWARD -d 10.10.10.0/24 -s www.wikipedia.org -p tcp --sport=443 -j ACCEPT
+   96  iptables -A FORWARD -s 10.10.10.0/24 -d www.centos.org -p tcp --dport=443 -j ACCEPT
+   97* iptables -A FORWARD -m 10.10.10.0/24 -s www.centos.org -p tcp --sport=443 -j ACCEPT
+   98  iptables -F
+   99  iptables -L
+  100  iptables -A FORWARD -s 10.10.10.130 -d www.youtube -p tcp --dport 443 -m state --state NEW,ESTABLISHED -j ACCEPT 
+  101  iptables -A FORWARD -s 10.10.10.130 -d www.youtube.com -p tcp --dport 443 -m state --state NEW,ESTABLISHED -j ACCEPT 
+  102  iptables -A FORWARD -d 10.10.10.130 -s www.youtube.com -p tcp --sport 443 -m state --state NEW,ESTABLISHED -j ACCEPT 
+  103  iptables -F
+  104  iptables -A FORWARD -s 10.10.10.0/24 -d 192.168.15.2 -p udp --dport 53 -j ACCEPT 
+  105  iptables -A FORWARD -d 10.10.10.0/24 -s 192.168.15.2 -p udp --sport 53 -j ACCEPT 
+  106  iptables -A FORWARD -s 10.10.10.130 -d www.youtube.com -p tcp --dport 443 -m state --state NEW,ESTABLISHED -j ACCEPT 
+  107  iptables -A FORWARD -d 10.10.10.130 -s www.youtube.com -p tcp --sport 443 -m state --state NEW,ESTABLISHED -j ACCEPT 
+  108  iptables -A FORWARD -s 10.10.10.132 -d www.youtube.com -p tcp --dport 443 -m state --state NEW,ESTABLISHED -j ACCEPT 
+  109  iptables -A FORWARD -d 10.10.10.132 -s www.youtube.com -p tcp --sport 443 -m state --state NEW,ESTABLISHED -j ACCEPT 
+  110  iptables -L
+  111  history
+[root@master ~]# iptables -A FORWARD -s 10.10.10.132 -d www.cisco.com -p tcp --dport 443 -m state --state NEW,ESTABLISHED -j ACCEPT 
+[root@master ~]# iptables -A FORWARD -d 10.10.10.132 -s www.cisco.com -p tcp --sport 443 -m state --state NEW,ESTABLISHED -j ACCEPT 
+[root@master ~]# iptables -A FORWARD -s 10.10.10.132 -d 184.31.223.208 -p tcp --dport 443 -m state --state NEW,ESTABLISHED -j ACCEPT 
+[root@master ~]# iptables -A FORWARD -d 10.10.10.132 -s 184.31.223.208 -p tcp --sport 443 -m state --state NEW,ESTABLISHED -j ACCEPT 
+[root@master ~]# iptables -A INPUT -i 192.168.15.151 -p ICMP --icmp-type echo-request -j DROP 
+[root@master ~]# iptables -A INPUT -d 192.168.15.151 -p ICMP --icmp-type echo-request -j DROP 
+[root@master ~]# iptables -L
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+DROP       icmp --  anywhere             anywhere             icmp echo-request
+DROP       icmp --  anywhere             master               icmp echo-request
+
+Chain FORWARD (policy DROP)
+target     prot opt source               destination         
+ACCEPT     udp  --  10.10.10.0/24        gateway              udp dpt:domain
+ACCEPT     udp  --  gateway              10.10.10.0/24        udp spt:domain
+ACCEPT     tcp  --  10.10.10.130         bom07s29-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s35-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s16-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom12s18-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s15-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s20-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s32-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom12s20-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s30-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s25-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom12s19-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s28-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s36-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s37-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s31-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s33-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s33-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s29-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s35-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s16-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom12s18-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s15-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s20-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s32-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom12s20-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s30-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s25-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom12s19-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s28-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s36-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s37-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s31-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s25-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s37-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s32-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s29-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom12s18-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s20-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s35-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s28-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom12s19-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s16-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom12s20-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s30-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s33-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s31-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s36-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s15-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s35-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s28-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom12s19-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s16-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom12s20-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s30-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s33-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s31-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s36-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s15-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s25-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s37-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s32-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s29-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom12s18-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s20-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         a23-213-68-43.deploy.static.akamaitechnologies.com  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  a23-213-68-43.deploy.static.akamaitechnologies.com  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         a184-31-223-208.deploy.static.akamaitechnologies.com  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  a184-31-223-208.deploy.static.akamaitechnologies.com  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+[root@master ~]# iptables -A INPUT -i 192.168.15.151 -P ICMP -m limit --limit 5/s -j ACCEPT 
+iptables v1.4.21: Cannot use -P with -A
+
+Try `iptables -h' or 'iptables --help' for more information.
+[root@master ~]# iptables -A INPUT -i 192.168.15.151 -p icmp -m limit --limit 5/s -j ACCEPT 
+[root@master ~]# iptables -D INPUT 1
+[root@master ~]# iptables -D INPUT 2
+[root@master ~]# iptables -L
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+DROP       icmp --  anywhere             master               icmp echo-request
+
+Chain FORWARD (policy DROP)
+target     prot opt source               destination         
+ACCEPT     udp  --  10.10.10.0/24        gateway              udp dpt:domain
+ACCEPT     udp  --  gateway              10.10.10.0/24        udp spt:domain
+ACCEPT     tcp  --  10.10.10.130         bom07s29-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s35-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s16-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom12s18-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s15-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s20-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s32-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom12s20-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s30-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s25-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom12s19-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s28-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s36-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s37-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s31-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s33-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s33-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s29-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s35-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s16-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom12s18-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s15-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s20-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s32-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom12s20-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s30-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s25-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom12s19-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s28-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s36-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s37-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s31-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s25-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s37-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s32-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s29-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom12s18-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s20-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s35-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s28-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom12s19-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s16-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom12s20-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s30-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s33-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s31-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s36-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s15-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s35-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s28-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom12s19-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s16-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom12s20-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s30-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s33-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s31-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s36-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s15-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s25-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s37-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s32-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s29-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom12s18-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s20-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         a23-213-68-43.deploy.static.akamaitechnologies.com  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  a23-213-68-43.deploy.static.akamaitechnologies.com  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         a184-31-223-208.deploy.static.akamaitechnologies.com  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  a184-31-223-208.deploy.static.akamaitechnologies.com  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+[root@master ~]# iptables -D INPUT 1
+[root@master ~]# iptables -A INPUT -i 192.168.15.151 -p icmp -m limit --limit 5/s -j ACCEPT 
+[root@master ~]# iptables -L
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+ACCEPT     icmp --  anywhere             anywhere             limit: avg 5/sec burst 5
+
+Chain FORWARD (policy DROP)
+target     prot opt source               destination         
+ACCEPT     udp  --  10.10.10.0/24        gateway              udp dpt:domain
+ACCEPT     udp  --  gateway              10.10.10.0/24        udp spt:domain
+ACCEPT     tcp  --  10.10.10.130         bom07s29-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s35-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s16-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom12s18-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s15-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s20-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s32-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom12s20-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s30-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s25-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom12s19-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s28-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s36-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s37-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s31-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s33-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s33-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s29-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s35-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s16-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom12s18-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s15-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s20-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s32-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom12s20-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s30-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s25-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom12s19-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s28-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s36-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s37-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s31-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s25-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s37-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s32-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s29-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom12s18-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s20-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s35-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s28-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom12s19-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s16-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom12s20-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s30-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s33-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s31-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s36-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s15-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s35-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s28-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom12s19-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s16-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom12s20-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s30-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s33-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s31-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s36-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s15-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s25-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s37-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s32-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s29-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom12s18-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s20-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         a23-213-68-43.deploy.static.akamaitechnologies.com  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  a23-213-68-43.deploy.static.akamaitechnologies.com  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         a184-31-223-208.deploy.static.akamaitechnologies.com  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  a184-31-223-208.deploy.static.akamaitechnologies.com  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+[root@master ~]# iptables -A INPUT -i 192.168.15.151 -p icmp -m limit --limit 10/s -j ACCEPT 
+[root@master ~]# iptables -D INPUT 1
+[root@master ~]# iptables -L
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+ACCEPT     icmp --  anywhere             anywhere             limit: avg 10/sec burst 5
+
+Chain FORWARD (policy DROP)
+target     prot opt source               destination         
+ACCEPT     udp  --  10.10.10.0/24        gateway              udp dpt:domain
+ACCEPT     udp  --  gateway              10.10.10.0/24        udp spt:domain
+ACCEPT     tcp  --  10.10.10.130         bom07s29-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s35-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s16-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom12s18-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s15-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s20-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s32-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom12s20-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s30-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s25-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom12s19-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s28-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s36-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s37-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s31-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s33-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s33-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s29-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s35-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s16-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom12s18-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s15-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s20-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s32-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom12s20-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s30-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s25-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom12s19-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s28-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s36-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s37-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s31-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s25-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s37-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s32-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s29-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom12s18-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s20-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s35-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s28-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom12s19-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s16-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom12s20-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s30-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s33-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s31-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s36-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s15-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s35-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s28-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom12s19-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s16-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom12s20-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s30-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s33-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s31-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s36-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s15-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s25-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s37-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s32-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s29-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom12s18-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s20-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         a23-213-68-43.deploy.static.akamaitechnologies.com  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  a23-213-68-43.deploy.static.akamaitechnologies.com  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         a184-31-223-208.deploy.static.akamaitechnologies.com  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  a184-31-223-208.deploy.static.akamaitechnologies.com  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+[root@master ~]# iptables -L
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+ACCEPT     icmp --  anywhere             anywhere             limit: avg 10/sec burst 5
+
+Chain FORWARD (policy DROP)
+target     prot opt source               destination         
+ACCEPT     udp  --  10.10.10.0/24        gateway              udp dpt:domain
+ACCEPT     udp  --  gateway              10.10.10.0/24        udp spt:domain
+ACCEPT     tcp  --  10.10.10.130         bom07s29-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s35-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s16-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom12s18-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s15-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s20-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s32-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom12s20-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s30-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s25-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom12s19-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s28-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s36-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s37-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s31-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.130         bom07s33-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s33-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s29-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s35-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s16-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom12s18-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s15-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s20-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s32-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom12s20-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s30-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s25-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom12s19-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s28-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s36-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s37-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s31-in-f14.1e100.net  10.10.10.130         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s25-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s37-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s32-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s29-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom12s18-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s20-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s35-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s28-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom12s19-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s16-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom12s20-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s30-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s33-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s31-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s36-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         bom07s15-in-f14.1e100.net  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s35-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s28-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom12s19-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s16-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom12s20-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s30-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s33-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s31-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s36-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s15-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s25-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s37-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s32-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s29-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom12s18-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  bom07s20-in-f14.1e100.net  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         a23-213-68-43.deploy.static.akamaitechnologies.com  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  a23-213-68-43.deploy.static.akamaitechnologies.com  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  10.10.10.132         a184-31-223-208.deploy.static.akamaitechnologies.com  tcp dpt:https state NEW,ESTABLISHED
+ACCEPT     tcp  --  a184-31-223-208.deploy.static.akamaitechnologies.com  10.10.10.132         tcp spt:https state NEW,ESTABLISHED
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+[root@master ~]# iptables -D INPUT 1
+[root@master ~]# iptables -A INPUT -i interface -p icmp -m length --length 1:128 -j ACCEPT 
+[root@master ~]# iptables -D INPUT 1
+[root@master ~]# iptables -A INPUT -i interface -p icmp -m length --length 1:128 -j ACCEPT 
+[root@master ~]# iptables -D INPUT 1
+[root@master ~]# iptables -A INPUT -i interface -p icmp -m length --length 128 -j ACCEPT 
+[root@master ~]# iptables -D INPUT 1
+[root@master ~]# iptables -A INPUT -i interface -p icmp -m length --length 128:65500 -j DROP 
+[root@master ~]# iptables -D INPUT 1
+[root@master ~]# iptables -A INPUT -i interface -p icmp -m length --length 64:65500 -j DROP 
+[root@master ~]# iptables -D INPUT 1
+[root@master ~]# iptables -A INPUT -i ens33 -p icmp -m length --length 128:65500 -j DROP 
+[root@master ~]# iptables -D INPUT 1
+[root@master ~]# iptables -A INPUT -i ens33 -p icmp -m length --length 256:65500 -j DROP 
+[root@master ~]# 

@@ -1,0 +1,517 @@
+[root@server ~]# cd /etc/nginx/
+[root@server nginx]# vim nginx.conf
+[root@server nginx]# systemctl restart nginx.service 
+Job for nginx.service failed because the control process exited with error code. See "systemctl status nginx.service" and "journalctl -xe" for details.
+[root@server nginx]# journalctl -xe
+-- Subject: Unit nginx.service has finished shutting down
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit nginx.service has finished shutting down.
+Jul 04 15:09:24 server systemd[1]: Starting The nginx HTTP and reverse proxy server...
+-- Subject: Unit nginx.service has begun start-up
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit nginx.service has begun starting up.
+Jul 04 15:09:24 server nginx[23092]: nginx: [emerg] invalid host in upstream "10.10.10.133:8000/" in /etc/nginx/nginx.conf:3
+Jul 04 15:09:24 server nginx[23092]: nginx: configuration file /etc/nginx/nginx.conf test failed
+Jul 04 15:09:24 server systemd[1]: nginx.service: control process exited, code=exited status=1
+Jul 04 15:09:24 server systemd[1]: Failed to start The nginx HTTP and reverse proxy server.
+-- Subject: Unit nginx.service has failed
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit nginx.service has failed.
+-- 
+-- The result is failed.
+Jul 04 15:09:24 server systemd[1]: Unit nginx.service entered failed state.
+Jul 04 15:09:24 server systemd[1]: nginx.service failed.
+Jul 04 15:09:24 server polkitd[705]: Unregistered Authentication Agent for unix-process:23081:5556052 (system bus name :1.54
+Jul 04 15:10:01 server systemd[1]: Started Session 118 of user root.
+-- Subject: Unit session-118.scope has finished start-up
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit session-118.scope has finished starting up.
+-- 
+-- The start-up result is done.
+Jul 04 15:10:01 server CROND[23113]: (root) CMD (/usr/lib64/sa/sa1 1 1)
+lines 1979-2012/2012 (END)
+-- Subject: Unit nginx.service has finished shutting down
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit nginx.service has finished shutting down.
+Jul 04 15:09:24 server systemd[1]: Starting The nginx HTTP and reverse proxy server...
+-- Subject: Unit nginx.service has begun start-up
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit nginx.service has begun starting up.
+Jul 04 15:09:24 server nginx[23092]: nginx: [emerg] invalid host in upstream "10.10.10.133:8000/" in /etc/nginx/nginx.conf:39
+Jul 04 15:09:24 server nginx[23092]: nginx: configuration file /etc/nginx/nginx.conf test failed
+Jul 04 15:09:24 server systemd[1]: nginx.service: control process exited, code=exited status=1
+Jul 04 15:09:24 server systemd[1]: Failed to start The nginx HTTP and reverse proxy server.
+-- Subject: Unit nginx.service has failed
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit nginx.service has failed.
+-- 
+-- The result is failed.
+Jul 04 15:09:24 server systemd[1]: Unit nginx.service entered failed state.
+Jul 04 15:09:24 server systemd[1]: nginx.service failed.
+Jul 04 15:09:24 server polkitd[705]: Unregistered Authentication Agent for unix-process:23081:5556052 (system bus name :1.541
+Jul 04 15:10:01 server systemd[1]: Started Session 118 of user root.
+-- Subject: Unit session-118.scope has finished start-up
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit session-118.scope has finished starting up.
+-- 
+-- The start-up result is done.
+Jul 04 15:10:01 server CROND[23113]: (root) CMD (/usr/lib64/sa/sa1 1 1)
+lines 1979-2012/2012 (END)
+-- Subject: Unit nginx.service has finished shutting down
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit nginx.service has finished shutting down.
+Jul 04 15:09:24 server systemd[1]: Starting The nginx HTTP and reverse proxy server...
+-- Subject: Unit nginx.service has begun start-up
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit nginx.service has begun starting up.
+Jul 04 15:09:24 server nginx[23092]: nginx: [emerg] invalid host in upstream "10.10.10.133:8000/" in /etc/nginx/nginx.conf:39
+Jul 04 15:09:24 server nginx[23092]: nginx: configuration file /etc/nginx/nginx.conf test failed
+Jul 04 15:09:24 server systemd[1]: nginx.service: control process exited, code=exited status=1
+Jul 04 15:09:24 server systemd[1]: Failed to start The nginx HTTP and reverse proxy server.
+-- Subject: Unit nginx.service has failed
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit nginx.service has failed.
+-- 
+-- The result is failed.
+Jul 04 15:09:24 server systemd[1]: Unit nginx.service entered failed state.
+Jul 04 15:09:24 server systemd[1]: nginx.service failed.
+Jul 04 15:09:24 server polkitd[705]: Unregistered Authentication Agent for unix-process:23081:5556052 (system bus name :1.541,
+Jul 04 15:10:01 server systemd[1]: Started Session 118 of user root.
+-- Subject: Unit session-118.scope has finished start-up
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit session-118.scope has finished starting up.
+-- 
+-- The start-up result is done.
+Jul 04 15:10:01 server CROND[23113]: (root) CMD (/usr/lib64/sa/sa1 1 1)
+lines 1979-2012/2012 (END)
+-- Subject: Unit nginx.service has finished shutting down
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit nginx.service has finished shutting down.
+Jul 04 15:09:24 server systemd[1]: Starting The nginx HTTP and reverse proxy server...
+-- Subject: Unit nginx.service has begun start-up
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit nginx.service has begun starting up.
+Jul 04 15:09:24 server nginx[23092]: nginx: [emerg] invalid host in upstream "10.10.10.133:8000/" in /etc/nginx/nginx.conf:39
+Jul 04 15:09:24 server nginx[23092]: nginx: configuration file /etc/nginx/nginx.conf test failed
+Jul 04 15:09:24 server systemd[1]: nginx.service: control process exited, code=exited status=1
+Jul 04 15:09:24 server systemd[1]: Failed to start The nginx HTTP and reverse proxy server.
+-- Subject: Unit nginx.service has failed
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit nginx.service has failed.
+-- 
+-- The result is failed.
+Jul 04 15:09:24 server systemd[1]: Unit nginx.service entered failed state.
+Jul 04 15:09:24 server systemd[1]: nginx.service failed.
+Jul 04 15:09:24 server polkitd[705]: Unregistered Authentication Agent for unix-process:23081:5556052 (system bus name :1.541, 
+Jul 04 15:10:01 server systemd[1]: Started Session 118 of user root.
+-- Subject: Unit session-118.scope has finished start-up
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit session-118.scope has finished starting up.
+-- 
+-- The start-up result is done.
+Jul 04 15:10:01 server CROND[23113]: (root) CMD (/usr/lib64/sa/sa1 1 1)
+lines 1979-2012/2012 (END)
+-- Subject: Unit nginx.service has finished shutting down
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit nginx.service has finished shutting down.
+Jul 04 15:09:24 server systemd[1]: Starting The nginx HTTP and reverse proxy server...
+-- Subject: Unit nginx.service has begun start-up
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit nginx.service has begun starting up.
+Jul 04 15:09:24 server nginx[23092]: nginx: [emerg] invalid host in upstream "10.10.10.133:8000/" in /etc/nginx/nginx.conf:39
+Jul 04 15:09:24 server nginx[23092]: nginx: configuration file /etc/nginx/nginx.conf test failed
+Jul 04 15:09:24 server systemd[1]: nginx.service: control process exited, code=exited status=1
+Jul 04 15:09:24 server systemd[1]: Failed to start The nginx HTTP and reverse proxy server.
+-- Subject: Unit nginx.service has failed
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit nginx.service has failed.
+-- 
+-- The result is failed.
+Jul 04 15:09:24 server systemd[1]: Unit nginx.service entered failed state.
+Jul 04 15:09:24 server systemd[1]: nginx.service failed.
+Jul 04 15:09:24 server polkitd[705]: Unregistered Authentication Agent for unix-process:23081:5556052 (system bus name :1.541, obj
+Jul 04 15:10:01 server systemd[1]: Started Session 118 of user root.
+-- Subject: Unit session-118.scope has finished start-up
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit session-118.scope has finished starting up.
+-- 
+-- The start-up result is done.
+Jul 04 15:10:01 server CROND[23113]: (root) CMD (/usr/lib64/sa/sa1 1 1)
+lines 1979-2012/2012 (END)
+-- Subject: Unit nginx.service has finished shutting down
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit nginx.service has finished shutting down.
+Jul 04 15:09:24 server systemd[1]: Starting The nginx HTTP and reverse proxy server...
+-- Subject: Unit nginx.service has begun start-up
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit nginx.service has begun starting up.
+Jul 04 15:09:24 server nginx[23092]: nginx: [emerg] invalid host in upstream "10.10.10.133:8000/" in /etc/nginx/nginx.conf:39
+Jul 04 15:09:24 server nginx[23092]: nginx: configuration file /etc/nginx/nginx.conf test failed
+Jul 04 15:09:24 server systemd[1]: nginx.service: control process exited, code=exited status=1
+Jul 04 15:09:24 server systemd[1]: Failed to start The nginx HTTP and reverse proxy server.
+-- Subject: Unit nginx.service has failed
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit nginx.service has failed.
+-- 
+-- The result is failed.
+Jul 04 15:09:24 server systemd[1]: Unit nginx.service entered failed state.
+Jul 04 15:09:24 server systemd[1]: nginx.service failed.
+Jul 04 15:09:24 server polkitd[705]: Unregistered Authentication Agent for unix-process:23081:5556052 (system bus name :1.541, obje
+Jul 04 15:10:01 server systemd[1]: Started Session 118 of user root.
+-- Subject: Unit session-118.scope has finished start-up
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit session-118.scope has finished starting up.
+-- 
+-- The start-up result is done.
+Jul 04 15:10:01 server CROND[23113]: (root) CMD (/usr/lib64/sa/sa1 1 1)
+lines 1979-2012/2012 (END)
+-- Subject: Unit nginx.service has finished shutting down
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit nginx.service has finished shutting down.
+Jul 04 15:09:24 server systemd[1]: Starting The nginx HTTP and reverse proxy server...
+-- Subject: Unit nginx.service has begun start-up
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit nginx.service has begun starting up.
+Jul 04 15:09:24 server nginx[23092]: nginx: [emerg] invalid host in upstream "10.10.10.133:8000/" in /etc/nginx/nginx.conf:39
+Jul 04 15:09:24 server nginx[23092]: nginx: configuration file /etc/nginx/nginx.conf test failed
+Jul 04 15:09:24 server systemd[1]: nginx.service: control process exited, code=exited status=1
+Jul 04 15:09:24 server systemd[1]: Failed to start The nginx HTTP and reverse proxy server.
+-- Subject: Unit nginx.service has failed
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit nginx.service has failed.
+-- 
+-- The result is failed.
+Jul 04 15:09:24 server systemd[1]: Unit nginx.service entered failed state.
+Jul 04 15:09:24 server systemd[1]: nginx.service failed.
+Jul 04 15:09:24 server polkitd[705]: Unregistered Authentication Agent for unix-process:23081:5556052 (system bus name :1.541, objec
+Jul 04 15:10:01 server systemd[1]: Started Session 118 of user root.
+-- Subject: Unit session-118.scope has finished start-up
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit session-118.scope has finished starting up.
+-- 
+-- The start-up result is done.
+Jul 04 15:10:01 server CROND[23113]: (root) CMD (/usr/lib64/sa/sa1 1 1)
+lines 1979-2012/2012 (END)
+-- Subject: Unit nginx.service has finished shutting down
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit nginx.service has finished shutting down.
+Jul 04 15:09:24 server systemd[1]: Starting The nginx HTTP and reverse proxy server...
+-- Subject: Unit nginx.service has begun start-up
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit nginx.service has begun starting up.
+Jul 04 15:09:24 server nginx[23092]: nginx: [emerg] invalid host in upstream "10.10.10.133:8000/" in /etc/nginx/nginx.conf:39
+Jul 04 15:09:24 server nginx[23092]: nginx: configuration file /etc/nginx/nginx.conf test failed
+Jul 04 15:09:24 server systemd[1]: nginx.service: control process exited, code=exited status=1
+Jul 04 15:09:24 server systemd[1]: Failed to start The nginx HTTP and reverse proxy server.
+-- Subject: Unit nginx.service has failed
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit nginx.service has failed.
+-- 
+-- The result is failed.
+Jul 04 15:09:24 server systemd[1]: Unit nginx.service entered failed state.
+Jul 04 15:09:24 server systemd[1]: nginx.service failed.
+Jul 04 15:09:24 server polkitd[705]: Unregistered Authentication Agent for unix-process:23081:5556052 (system bus name :1.541, object
+Jul 04 15:10:01 server systemd[1]: Started Session 118 of user root.
+-- Subject: Unit session-118.scope has finished start-up
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit session-118.scope has finished starting up.
+-- 
+-- The start-up result is done.
+Jul 04 15:10:01 server CROND[23113]: (root) CMD (/usr/lib64/sa/sa1 1 1)
+[root@server nginx]# vim nginx.conf
+[root@server nginx]# systemctl restart nginx.service 
+Job for nginx.service failed because the control process exited with error code. See "systemctl status nginx.service" and "journalctl -xe" for details.
+[root@server nginx]# journalctl -xe
+-- The result is failed.
+Jul 04 15:09:24 server systemd[1]: Unit nginx.service entered failed state.
+Jul 04 15:09:24 server systemd[1]: nginx.service failed.
+Jul 04 15:09:24 server polkitd[705]: Unregistered Authentication Agent for unix-process:23081:5556052 (system bus name :1.541, object
+Jul 04 15:10:01 server systemd[1]: Started Session 118 of user root.
+-- Subject: Unit session-118.scope has finished start-up
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit session-118.scope has finished starting up.
+-- 
+-- The start-up result is done.
+Jul 04 15:10:01 server CROND[23113]: (root) CMD (/usr/lib64/sa/sa1 1 1)
+Jul 04 15:11:56 server polkitd[705]: Registered Authentication Agent for unix-process:23149:5571332 (system bus name :1.544 [/usr/bin
+Jul 04 15:11:56 server systemd[1]: Starting The nginx HTTP and reverse proxy server...
+-- Subject: Unit nginx.service has begun start-up
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit nginx.service has begun starting up.
+Jul 04 15:11:57 server nginx[23156]: nginx: [emerg] duplicate location "/" in /etc/nginx/nginx.conf:60
+Jul 04 15:11:57 server nginx[23156]: nginx: configuration file /etc/nginx/nginx.conf test failed
+Jul 04 15:11:57 server systemd[1]: nginx.service: control process exited, code=exited status=1
+Jul 04 15:11:57 server systemd[1]: Failed to start The nginx HTTP and reverse proxy server.
+-- Subject: Unit nginx.service has failed
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit nginx.service has failed.
+-- 
+-- The result is failed.
+Jul 04 15:11:57 server systemd[1]: Unit nginx.service entered failed state.
+Jul 04 15:11:57 server systemd[1]: nginx.service failed.
+Jul 04 15:11:57 server polkitd[705]: Unregistered Authentication Agent for unix-process:23149:5571332 (system bus name :1.544, object
+[root@server nginx]# vim nginx.conf
+[root@server nginx]# systemctl restart nginx.service 
+Job for nginx.service failed because the control process exited with error code. See "systemctl status nginx.service" and "journalctl -xe" for details.
+[root@server nginx]# journalctl -xe
+Jul 04 15:11:57 server nginx[23156]: nginx: [emerg] duplicate location "/" in /etc/nginx/nginx.conf:60
+Jul 04 15:11:57 server nginx[23156]: nginx: configuration file /etc/nginx/nginx.conf test failed
+Jul 04 15:11:57 server systemd[1]: nginx.service: control process exited, code=exited status=1
+Jul 04 15:11:57 server systemd[1]: Failed to start The nginx HTTP and reverse proxy server.
+-- Subject: Unit nginx.service has failed
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit nginx.service has failed.
+-- 
+-- The result is failed.
+Jul 04 15:11:57 server systemd[1]: Unit nginx.service entered failed state.
+Jul 04 15:11:57 server systemd[1]: nginx.service failed.
+Jul 04 15:11:57 server polkitd[705]: Unregistered Authentication Agent for unix-process:23149:5571332 (system bus name :1.544, object
+Jul 04 15:13:33 server polkitd[705]: Registered Authentication Agent for unix-process:23199:5580973 (system bus name :1.545 [/usr/bin
+Jul 04 15:13:33 server systemd[1]: Starting The nginx HTTP and reverse proxy server...
+-- Subject: Unit nginx.service has begun start-up
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit nginx.service has begun starting up.
+Jul 04 15:13:33 server nginx[23207]: nginx: [emerg] duplicate location "/" in /etc/nginx/nginx.conf:60
+Jul 04 15:13:33 server nginx[23207]: nginx: configuration file /etc/nginx/nginx.conf test failed
+Jul 04 15:13:33 server systemd[1]: nginx.service: control process exited, code=exited status=1
+Jul 04 15:13:33 server systemd[1]: Failed to start The nginx HTTP and reverse proxy server.
+-- Subject: Unit nginx.service has failed
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit nginx.service has failed.
+-- 
+-- The result is failed.
+Jul 04 15:13:33 server systemd[1]: Unit nginx.service entered failed state.
+Jul 04 15:13:33 server systemd[1]: nginx.service failed.
+[root@server nginx]# vim nginx.conf
+[root@server nginx]# systemctl restart nginx.service 
+Job for nginx.service failed because the control process exited with error code. See "systemctl status nginx.service" and "journalctl -xe" for details.
+[root@server nginx]# journalctl -xe
+Jul 04 15:13:33 server nginx[23207]: nginx: [emerg] duplicate location "/" in /etc/nginx/nginx.conf:60
+Jul 04 15:13:33 server nginx[23207]: nginx: configuration file /etc/nginx/nginx.conf test failed
+Jul 04 15:13:33 server systemd[1]: nginx.service: control process exited, code=exited status=1
+Jul 04 15:13:33 server systemd[1]: Failed to start The nginx HTTP and reverse proxy server.
+-- Subject: Unit nginx.service has failed
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit nginx.service has failed.
+-- 
+-- The result is failed.
+Jul 04 15:13:33 server systemd[1]: Unit nginx.service entered failed state.
+Jul 04 15:13:33 server systemd[1]: nginx.service failed.
+Jul 04 15:13:33 server polkitd[705]: Unregistered Authentication Agent for unix-process:23199:5580973 (system bus name :1.545, object
+Jul 04 15:14:37 server polkitd[705]: Registered Authentication Agent for unix-process:23240:5587364 (system bus name :1.546 [/usr/bin
+Jul 04 15:14:37 server systemd[1]: Starting The nginx HTTP and reverse proxy server...
+-- Subject: Unit nginx.service has begun start-up
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit nginx.service has begun starting up.
+Jul 04 15:14:37 server nginx[23247]: nginx: [emerg] duplicate location "/" in /etc/nginx/nginx.conf:60
+Jul 04 15:14:37 server nginx[23247]: nginx: configuration file /etc/nginx/nginx.conf test failed
+Jul 04 15:14:37 server systemd[1]: nginx.service: control process exited, code=exited status=1
+Jul 04 15:14:37 server systemd[1]: Failed to start The nginx HTTP and reverse proxy server.
+-- Subject: Unit nginx.service has failed
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit nginx.service has failed.
+-- 
+-- The result is failed.
+Jul 04 15:14:37 server systemd[1]: Unit nginx.service entered failed state.
+Jul 04 15:14:37 server systemd[1]: nginx.service failed.
+[root@server nginx]# vim nginx.conf
+[root@server nginx]# systemctl restart nginx.service 
+[root@server nginx]# cat nginx.conf
+# For more information on configuration, see:
+#   * Official English Documentation: http://nginx.org/en/docs/
+#   * Official Russian Documentation: http://nginx.org/ru/docs/
+
+user nginx;
+worker_processes auto;
+error_log /var/log/nginx/error.log;
+pid /run/nginx.pid;
+
+# Load dynamic modules. See /usr/share/doc/nginx/README.dynamic.
+include /usr/share/nginx/modules/*.conf;
+
+events {
+    worker_connections 1024;
+}
+
+http {
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  /var/log/nginx/access.log  main;
+
+    sendfile            on;
+    tcp_nopush          on;
+    tcp_nodelay         on;
+    keepalive_timeout   65;
+    types_hash_max_size 4096;
+
+    include             /etc/nginx/mime.types;
+    default_type        application/octet-stream;
+
+    # Load modular configuration files from the /etc/nginx/conf.d directory.
+    # See http://nginx.org/en/docs/ngx_core_module.html#include
+    # for more information.
+    include /etc/nginx/conf.d/*.conf;
+
+	upstream app1 {
+		server 10.10.10.133:8000;
+		server 10.10.10.133:9000;
+	}
+	upstream app2 {
+		server 10.10.10.133:9500;
+		server 10.10.10.133:9800;
+        }
+
+
+    server {
+        listen       80;
+        listen       [::]:80;
+        server_name  _;
+        root         /usr/share/nginx/html;
+
+        # Load configuration files for the default server block.
+        include /etc/nginx/default.d/*.conf;
+	
+	location /app1{
+                proxy_pass http://app1/;
+        }
+	location /app2 {
+                proxy_pass http://app2/;
+        }
+
+
+        error_page 404 /404.html;
+        location = /404.html {
+        }
+
+        error_page 500 502 503 504 /50x.html;
+        location = /50x.html {
+        }
+#	location /{
+#		proxy_pass http://localhost/;
+#	}
+#	location /acts {
+#		proxy_pass http://10.10.10.133:8000/;
+#	}
+#	location /hpcsa {
+#		proxy_pass http://10.10.10.133:9000/;
+#	}
+#	location /ditiss {
+#		proxy_pass http://10.10.10.133:9500/;	
+#	}
+	
+    }
+
+# Settings for a TLS enabled server.
+#
+#    server {
+#        listen       443 ssl http2;
+#        listen       [::]:443 ssl http2;
+#        server_name  _;
+#        root         /usr/share/nginx/html;
+#
+#        ssl_certificate "/etc/pki/nginx/server.crt";
+#        ssl_certificate_key "/etc/pki/nginx/private/server.key";
+#        ssl_session_cache shared:SSL:1m;
+#        ssl_session_timeout  10m;
+#        ssl_ciphers HIGH:!aNULL:!MD5;
+#        ssl_prefer_server_ciphers on;
+#
+#        # Load configuration files for the default server block.
+#        include /etc/nginx/default.d/*.conf;
+#
+#        error_page 404 /404.html;
+#            location = /40x.html {
+#        }
+#
+#        error_page 500 502 503 504 /50x.html;
+#            location = /50x.html {
+#        }
+#    }
+
+}
+
+[root@server nginx]# 

@@ -1,0 +1,507 @@
+[root@master ~]# history
+    1  ip a
+    2  ifup ens34
+    3  ip a
+    4  hostnamectl set-hostname master
+    5  man sed
+    6  ip a
+    7  ping www.google.com
+    8  systemctl status firewalld
+    9  systemctl stop firewalld
+   10  systemctl disable firewalld
+   11  yum search iptables
+   12  yum install iptables-services iptables-utils 
+   13  systemctl start iptables
+   14  systemctl status iptables
+   15  systemctl enable iptables
+   16  iptables -L
+   17  iptables -t filter -L
+   18  iptables -t nat -L
+   19  iptables -t mangle -L
+   20  iptables -t raw -L
+   21  iptables --flush 
+   22  iptables -F
+   23  iptables -L
+   24  systemctl restart iptables
+   25  iptables -L
+   26  iptables -F
+   27  iptables -L
+   28  iptables -P FORWARD DROP 
+   29  iptables -L
+   30  cat /proc/sys/net/ipv4/ip_forward
+   31  vi /etc/sysctl.conf 
+   32  systemctl status iptables
+   33  iptables -F
+   34  iptables -t nat -A POSTROUTING -s 10.10.10.0/24 -o ens33 -j MASQUERADE 
+   35  iptables -t nat -L
+   36  iptables -L
+   37  iptables FORWARD ACCEPT
+   38  iptables -P FORWARD ACCEPT
+   39  iptables -L
+   40  iptables -P FORWARD DROP
+   41  iptables -L
+   42  iptables -A FORWARD -s 10.10.10.0/24 -d 192.168.15.2 -p udp --dport 53 -j ACCEPT 
+   43  iptables -A FORWARD -d 10.10.10.0/24 -s 192.168.15.2 -p udp --dport 53 -j ACCEPT 
+   44  iptables -A FORWARD -d 10.10.10.0/24 -s 192.168.15.2 -p udp --sport 53 -j ACCEPT 
+   45  iptables
+   46  iptables -L
+   47  iptables -F
+   48  iptables -A FORWARD -d 10.10.10.0/24 -s 192.168.15.2 -p udp --sport 53 -j ACCEPT 
+   49  iptables -A FORWARD -s 10.10.10.0/24 -d 192.168.15.2 -p udp --dport 53 -j ACCEPT 
+   50  iptables -L
+   51  ip a
+   52  iptables -A FORWARD -s 10.10.10.0/24 -d www.google.com --dport 443 -j ACCEPT 
+   53  iptables -L
+   54  iptables -A FORWARD -s 10.10.10.0/24 -d www.google.com -p tcp --dport 443 -j ACCEPT 
+   55  iptables -A FORWARD -d 10.10.10.0/24 -s www.google.com -p tcp --sport 443 -j ACCEPT 
+   56  iptables -L
+   57  service iptables save
+   58  iptables -L
+   59  iptables -A FORWARD -s 10.10.10.130 -d www.youtube.com -p tcp --dport=443 -j ACCEPT
+   60  iptables -A FORWARD -d 10.10.10.130 -s www.youtube.com -p tcp --sport=443 -j ACCEPT
+   61  iptables -L
+   62  iptables -A FORWARD -s 10.10.10.130 -d www.microsoft.com -p tcp --dport=443 -j ACCEPT
+   63  iptables -A FORWARD -d 10.10.10.130 -s www.microsoft.com -p tcp --sport=443 -j ACCEPT
+   64  iptables -L
+   65  nslookup www.microsoft.com
+   66  curl https://www.microsoft.com
+   67  iptables -A FORWARD -s 10.10.10.130 -d 184.29.24.235 -p tcp --dport=443 -j ACCEPT
+   68  iptables -A FORWARD -d 10.10.10.130 -s 184.29.24.235 -p tcp --sport=443 -j ACCEPT
+   69  iptables -A FORWARD -d 10.10.10.130 -s www.cisco.com -p tcp --sport=443 -j ACCEPT
+   70  iptables -A FORWARD -s 10.10.10.130 -d 104.80.48.82 -p tcp --dport=443 -j ACCEPT
+   71  iptables -A FORWARD -d 10.10.10.130 -s 104.80.48.82 -p tcp --sport=443 -j ACCEPT
+   72  iptables -A FORWARD -s 10.10.10.130 -d www.aws.amazon.com -p tcp --dport=443 -j ACCEPT
+   73  iptables -A FORWARD -d 10.10.10.130 -s www.aws.amazon.com -p tcp --sport=443 -j ACCEPT
+   74  iptables -A FORWARD -s 10.10.10.132 -d azure.microsoft.com -p tcp --dport=443 -j ACCEPT
+   75  iptables -A FORWARD -d 10.10.10.132 -s azure.microsoft.com -p tcp --sport=443 -j ACCEPT
+   76  iptables -A FORWARD -s 10.10.10.132 -d 23.35.91.153 -p tcp --dport=443 -j ACCEPT
+   77  iptables -A FORWARD -d 10.10.10.132 -s 23.35.91.153 -p tcp --sport=443 -j ACCEPT
+   78  iptables -A FORWARD -s 10.10.10.132 -d www.heroku.com -p tcp --dport=443 -j ACCEPT
+   79  iptables -A FORWARD -d 10.10.10.132 -s www.heroku.com -p tcp --sport=443 -j ACCEPT
+   80  iptables -A FORWARD -s 10.10.10.132 -d www.redhat.com -p tcp --dport=443 -j ACCEPT
+   81  iptables -A FORWARD -d 10.10.10.132 -s www.redhat.com -p tcp --sport=443 -j ACCEPT
+   82  iptables -A FORWARD -s 10.10.10.132 -d 23.10.228.171 -p tcp --dport=443 -j ACCEPT
+   83  iptables -A FORWARD -d 10.10.10.132 -s 23.10.228.171 -p tcp --sport=443 -j ACCEPT
+   84  iptables -A FORWARD -s 10.10.10.132 -d 96.6.35.160 -p tcp --dport=443 -j ACCEPT
+   85  iptables -A FORWARD -d 10.10.10.132 -s 96.6.35.160 -p tcp --sport=443 -j ACCEPT
+   86  iptables -A FORWARD -s 10.10.10.132 -d 108.159.61.84 -p tcp --dport=443 -j ACCEPT
+   87  iptables -A FORWARD -d 10.10.10.132 -s 108.159.61.84 -p tcp --sport=443 -j ACCEPT
+   88  iptables -A FORWARD -s 10.10.10.0 -d www.google.com -p tcp --dport=443 -j ACCEPT
+   89  iptables -A FORWARD -s 10.10.10.0/24 -d www.google.com -p tcp --dport=443 -j ACCEPT
+   90  iptables -A FORWARD -d 10.10.10.0/24 -s www.google.com -p tcp --sport=443 -j ACCEPT
+   91  iptables -A FORWARD -s 10.10.10.0/24 -d www.wikipedia.com -p tcp --dport=443 -j ACCEPT
+   92  nslookup www.wikipedia.com
+   93  iptables -A FORWARD -s 10.10.10.0/24 -d 103.102.166.226 -p tcp --dport=443 -j ACCEPT
+   94  iptables -A FORWARD -d 10.10.10.0/24 -s 103.102.166.226 -p tcp --sport=443 -j ACCEPT
+   95  iptables -A FORWARD -s 10.10.10.0/24 -d www.wikipedia.org -p tcp --dport=443 -j ACCEPT
+   96  iptables -A FORWARD -d 10.10.10.0/24 -s www.wikipedia.org -p tcp --sport=443 -j ACCEPT
+   97  iptables -A FORWARD -s 10.10.10.0/24 -d www.centos.org -p tcp --dport=443 -j ACCEPT
+   98  iptables -A FORWARD -m 10.10.10.0/24 -s www.centos.org -p tcp --sport=443 -j ACCEPT
+   99  iptables -F
+  100  iptables -L
+  101  iptables -A FORWARD -s 10.10.10.130 -d www.youtube -p tcp --dport 443 -m state --state NEW,ESTABLISHED -j ACCEPT 
+  102  iptables -A FORWARD -s 10.10.10.130 -d www.youtube.com -p tcp --dport 443 -m state --state NEW,ESTABLISHED -j ACCEPT 
+  103  iptables -A FORWARD -d 10.10.10.130 -s www.youtube.com -p tcp --sport 443 -m state --state NEW,ESTABLISHED -j ACCEPT 
+  104  iptables -F
+  105  iptables -A FORWARD -s 10.10.10.0/24 -d 192.168.15.2 -p udp --dport 53 -j ACCEPT 
+  106  iptables -A FORWARD -d 10.10.10.0/24 -s 192.168.15.2 -p udp --sport 53 -j ACCEPT 
+  107  iptables -A FORWARD -s 10.10.10.130 -d www.youtube.com -p tcp --dport 443 -m state --state NEW,ESTABLISHED -j ACCEPT 
+  108  iptables -A FORWARD -d 10.10.10.130 -s www.youtube.com -p tcp --sport 443 -m state --state NEW,ESTABLISHED -j ACCEPT 
+  109  iptables -A FORWARD -s 10.10.10.132 -d www.youtube.com -p tcp --dport 443 -m state --state NEW,ESTABLISHED -j ACCEPT 
+  110  iptables -A FORWARD -d 10.10.10.132 -s www.youtube.com -p tcp --sport 443 -m state --state NEW,ESTABLISHED -j ACCEPT 
+  111  iptables -L
+  112  history
+  113  iptables -A FORWARD -s 10.10.10.132 -d www.cisco.com -p tcp --dport 443 -m state --state NEW,ESTABLISHED -j ACCEPT 
+  114  iptables -A FORWARD -d 10.10.10.132 -s www.cisco.com -p tcp --sport 443 -m state --state NEW,ESTABLISHED -j ACCEPT 
+  115  iptables -A FORWARD -s 10.10.10.132 -d 184.31.223.208 -p tcp --dport 443 -m state --state NEW,ESTABLISHED -j ACCEPT 
+  116  iptables -A FORWARD -d 10.10.10.132 -s 184.31.223.208 -p tcp --sport 443 -m state --state NEW,ESTABLISHED -j ACCEPT 
+  117  iptables -A INPUT -i 192.168.15.151 -p ICMP --icmp-type echo-request -j DROP 
+  118  iptables -A INPUT -d 192.168.15.151 -p ICMP --icmp-type echo-request -j DROP 
+  119  iptables -L
+  120  iptables -A INPUT -i 192.168.15.151 -P ICMP -m limit --limit 5/s -j ACCEPT 
+  121  iptables -A INPUT -i 192.168.15.151 -p icmp -m limit --limit 5/s -j ACCEPT 
+  122  iptables -D INPUT 1
+  123  iptables -D INPUT 2
+  124  iptables -L
+  125  iptables -D INPUT 1
+  126  iptables -A INPUT -i 192.168.15.151 -p icmp -m limit --limit 5/s -j ACCEPT 
+  127  iptables -L
+  128  iptables -A INPUT -i 192.168.15.151 -p icmp -m limit --limit 10/s -j ACCEPT 
+  129  iptables -D INPUT 1
+  130  iptables -L
+  131  iptables -D INPUT 1
+  132  iptables -A INPUT -i interface -p icmp -m length --length 1:128 -j ACCEPT 
+  133  iptables -D INPUT 1
+  134  iptables -A INPUT -i interface -p icmp -m length --length 1:128 -j ACCEPT 
+  135  iptables -D INPUT 1
+  136  iptables -A INPUT -i interface -p icmp -m length --length 128 -j ACCEPT 
+  137  iptables -D INPUT 1
+  138  iptables -A INPUT -i interface -p icmp -m length --length 128:65500 -j DROP 
+  139  iptables -D INPUT 1
+  140  iptables -A INPUT -i interface -p icmp -m length --length 64:65500 -j DROP 
+  141  iptables -D INPUT 1
+  142  iptables -A INPUT -i ens33 -p icmp -m length --length 128:65500 -j DROP 
+  143  iptables -D INPUT 1
+  144  iptables -A INPUT -i ens33 -p icmp -m length --length 256:65500 -j DROP 
+  145  history
+  146  yum install squid
+  147  systemctl status squid
+  148  systemctl start squid
+  149  systemctl status squid
+  150  squid -z
+  151  vi /etc/squid/squid.conf
+  152  iptables -L
+  153  iptables -F
+  154  iptables -L
+  155  iptables -P  FORWARD ACCEPT
+  156  iptables -L
+  157  iptables -t nat -F
+  158  iptables -A INPUT -s 10.10.10.130/24 -P tcp --dport 3128 -j ACCEPT 
+  159  iptables -A INPUT -s 10.10.10.130/24 -p tcp --dport 3128 -j ACCEPT 
+  160  yum install squid
+  161  vi /etc/squid/squid.conf
+  162  squid -z
+  163  ls /var/spool/squid
+  164  ls /var/spool/squid/
+  165  ls /var/spool/squid/00
+  166  systemctl restart squid
+  167  ls /var/spool/squid/00
+  168  systemctl status squid
+  169  iptables -A INPUT -s 10.10.10.132/24 -p tcp --dport 3128 -j ACCEPT 
+  170  systemctl restart squid
+  171  vi /etc/squid/squid.conf
+  172  vi /etc/squid/blockc1-sites.txt
+  173  systemctl restart squid
+  174  systemctl status squid
+  175  vi /etc/squid/squid.conf
+  176  systemctl restart squid
+  177  vi /etc/squid/squid.conf
+  178  systemctl restart squid
+  179  systemctl status squid
+  180  vi /etc/squid/squid.conf
+  181  systemctl restart squid
+  182  systemctl status squid
+  183  vi /etc/squid/squid.conf
+  184  systemctl restart squid
+  185  journalctl -xe
+  186  vi /etc/squid/squid.conf
+  187  systemctl restart squid
+  188  journalctl -xe
+  189  vi /etc/squid/squid.conf
+  190  systemctl restart squid
+  191  systemctl status squid
+  192  vi /etc/squid/squid.conf
+  193  systemctl restart squid
+  194  systemctl status squid
+  195  vi /etc/squid/client1-blocked.txt
+  196  systemctl restart squid
+  197  systemctl status squid
+  198  vi /etc/
+  199  systemctl restart squid
+  200  journalctl -xe
+  201  vi /etc/squid/squid.conf
+  202  systemctl restart squid
+  203  systemctl status squid
+  204  vi /etc/squid/window-blocked.txt
+  205  systemctl restart squid
+  206  systemctl status squid
+  207  vi /etc/squid/squid.conf
+  208  systemctl restart squid
+  209  journalctl -xe
+  210  vi /etc/squid/squid.conf
+  211  systemctl restart squid
+  212  vi /etc/squid/blocked.txt
+  213  systemctl restart squid
+  214  vi /etc/squid/blocked.txt
+  215  systemctl restart squid
+  216  systemctl restart squid
+  217  journalctl -xe
+  218  vi /etc/squid/squid.conf
+  219  systemctl restart squid
+  220  journalctl -xe
+  221  vi /etc/squid/time-blocked.txt
+  222  systemctl restart squid
+  223  journalctl -xe
+  224  vi /etc/squid/squid.conf
+  225  systemctl restart squid
+  226  journalctl -xe
+  227  vi /etc/squid/squid.conf
+  228  systemctl restart squid
+  229  systemctl status squid
+  230  cat /etc/squid/time-blocked.txt
+  231  vi /etc/squid/time-blocked.txt
+  232  systemctl restart squid
+  233  vi /etc/squid/squid.conf
+  234  vi /etc/squid/time-blocked.txt
+  235  systemctl restart squid
+  236  systemctl status squid
+  237  vi /etc/squid/squid.conf
+  238  systemctl status squid
+  239  vi /etc/squid/squid.conf
+  240  systemctl restart squid
+  241  journalctl -xe
+  242  systemctl restart squid
+  243  vi /etc/squid/squid.conf
+  244  systemctl restart squid
+  245  vi /etc/squid/time-blocked.txt
+  246  vi /etc/squid/squid.conf
+  247  vim /etc/squid/squid.conf
+  248  vi /etc/squid/director-blocked.txt
+  249  vi /etc/squid/squid.conf
+  250  vim /etc/squid/squid.conf
+  251  systemctl restart squid
+  252  systemctl status squid
+  253  history 
+  254  systemctl status squid
+  255  systemctl start squid
+  256  ip a
+  257  htpasswd /etc/squid/squid-users user2
+  258  cat /etc/squid/squid-users
+  259  htpasswd /etc/squid/squid-users user3
+  260  cat /etc/squid/squid-users
+  261  vim /etc/squid/user1.txt
+  262  vi /etc/squid/squid.conf
+  263  vim /etc/squid/squid.conf
+  264  systemctl restart squid
+  265  systemctl status squid
+  266  vim /etc/squid/squid.conf
+  267  systemctl restart squid
+  268  vim /etc/squid/squid.conf
+  269  systemctl restart squid
+  270  vim /etc/squid/squid.conf
+  271  systemctl restart squid
+  272  vim /etc/squid/squid.conf
+  273  systemctl restart squid
+  274  vim /etc/squid/squid.conf
+  275  vim /etc/squid/cartoon.txt
+  276  htpasswd /etc/squid/squid-users tom
+  277  htpasswd /etc/squid/squid-users jerry
+  278  htpasswd /etc/squid/squid-users noddy
+  279  systemctl restart squid
+  280  journalctl -xe
+  281  vim /etc/squid/squid.conf
+  282  systemctl restart squid
+  283  vim /etc/squid/squid.conf
+  284  cat /etc/squid/squid.conf
+  285  vim /etc/squid/squid.conf
+  286  systemctl restart squid
+  287  vi /etc/squid/cartoon.txt 
+  288  history 
+  289  p a
+  290  ip a
+  291  man -j
+  292  man j
+  293  man MASQUERADE
+  294  ping www.google.com
+  295  systemctl status httpd
+  296  nslookup www.cisco.com
+  297  nslookup www.aws.amazon.com
+  298  nslookup www.aws.heroku.com
+  299  nslookup www.redhat.com
+  300  ping www.heroku.com
+  301  nslookup www.heroku.com
+  302  iptables -L
+  303  ping www.cisco.com
+  304  nslookup www.cisco.com
+  305  ip a
+  306  iptables -L
+  307  ip a
+  308  ifup ens33
+  309  dhclient
+  310  ifup ens33
+  311  ip a
+  312  ifup ens33
+  313  vi /etc/squid/squid.conf
+  314  cat /etc/squid/squid.conf
+  315  vi /etc/squid/squid.conf
+  316  cat /etc/squid/squid.conf
+  317  set nu
+  318  vi /etc/squid/squid.conf
+  319  cat /etc/squid/squid.conf
+  320  vi /etc/squid/squid.conf
+  321  vim /etc/squid/squid.conf
+  322  cd /etc/squid/
+  323  cp squid.conf /root/Desktop/
+  324  cd
+  325  cd /etc/
+  326  cp squid /root/Desktop/
+  327  cp squid/ /root/Desktop/
+  328  cd
+  329  vim /etc/squid/squid.conf
+  330  cd /etc/squid/
+  331  htpasswd
+  332  yum install httpd-tools
+  333  htpasswd
+  334  htpasswd -c /etc/squid/squid-users user1
+  335  cat squid-users 
+  336  vi squid.conf
+  337  systemctl restart squid
+  338  systemctl status squid
+  339  history 
+  340  cat squid.conf
+  341  history 
+  342  vim squid.conf
+  343  sestatus
+  344  setenforec 0
+  345  setenforce 0
+  346  vi /etc/selinux/config 
+  347  cat /proc/sys/net/ipv4/ip_forward
+  348  vi /etc/sysctl.conf 
+  349  yum install epel-release -y
+  350  yum install openvpn -y
+  351  cd /etc/openvpn/
+  352  wget https://github.com/OpenVPN/easy-rsa/releases/download/v3.0.6/EasyRSA-unix-v3.0.6.tgz
+  353  ls
+  354  tar -xvzf EasyRSA-unix-v3.0.6.tgz
+  355  mv EasyRSA-v3.0.6 easy-rsa
+  356  cd easy-rsa/
+  357  cat vars.example 
+  358  vim vars
+  359  cat vars
+  360  ls
+  361  ./easyrsa init-pki
+  362  ./easyrsa build-ca
+  363  ls
+  364  ls pki
+  365  ls pki/private/
+  366  ./easyrsa gen-req demovpn nopass
+  367  ls pki/reqs/demovpn.req 
+  368  cat pki/reqs/demovpn.req 
+  369  ./easyrsa sign-req server demovpn
+  370  cat pki/issued/demovpn.crt 
+  371  openssl verify -CAfile pki/ca.crt pki/issued/demovpn.crt 
+  372  ./easyrsa gen-dh
+  373  cp pki/ca.crt /etc/openvpn/server/
+  374  cp pki/dh.pem /etc/openvpn/server/
+  375  cp pki/private/demovpn.key /etc/openvpn/server/
+  376  cp pki/issued/demovpn.crt /etc/openvpn/server/
+  377  ./easyrsa gen-req client nopass
+  378  ./easyrsa sign-req client client
+  379  ./easyrsa sign-req client jerry
+  380  ./easyrsa gen-req indra nopass
+  381  ./easyrsa sign-req client indra
+  382  cp pki/ca.crt /etc/openvpn/client/
+  383  ls /etc/openvpn/client/
+  384  cp pki/issued/client.crt /etc/openvpn/client/
+  385  cp pki/private/client.key /etc/openvpn/client/
+  386  ls  /etc/openvpn/client/
+  387  vi /etc/openvpn/server/server.conf
+  388  systemctl start openvpn-server@server
+  389  systemctl enable openvpn-server@server
+  390  systemctl status openvpn-server@server
+  391  systemctl start firewalld.service 
+  392  systemctl enable firewalld.service 
+  393  firewall-cmd --permanent --add-service=openvpn
+  394  firewall-cmd --permanent --zone=trusted --add-service=openvpn
+  395  firewall-cmd --permanent --zone=trusted --add-interface=tun0
+  396  firewall-cmd --add-masquerade
+  397  firewall-cmd --permanent --add-masquerade
+  398  tecadmin=$(ip route get 8.8.8.8 | awk 'NR==1 {print $(NF-2)}')
+  399  ip route get 8.8.8.8
+  400  firewall-cmd --permanent --direct --passthrough ipv4 -t nat -A POSTROUTING -s 10.8.0.0/24 -o ens33 -j MASQUERADE
+  401  firewall-cmd --reload
+  402  vim /etc/openvpn/client/client.ovpn
+  403  scp -r root@192.168.15.161:/etc/openvpn/client .
+  404  scp -r /etc/openvpn/client/ root@192.168.15.161:/root
+  405  cd /etc/openvpn/server/
+  406  vi server.conf 
+  407  cat server.conf 
+  408  systemctl restart openvpn-server@server
+  409  systemctl status openvpn-server@server
+  410  history 
+  411   345  setenforce 0
+  412    346  vi /etc/selinux/config
+  413    347  cat /proc/sys/net/ipv4/ip_forward
+  414    348  vi /etc/sysctl.conf
+  415    349  yum install epel-release -y
+  416    350  yum install openvpn -y
+  417    351  cd /etc/openvpn/
+  418    352  wget https://github.com/OpenVPN/easy-rsa/releases/download/v3.0.6/EasyRSA-unix-v3.0.6.tgz
+  419    353  ls
+  420    354  tar -xvzf EasyRSA-unix-v3.0.6.tgz
+  421    355  mv EasyRSA-v3.0.6 easy-rsa
+  422    356  cd easy-rsa/
+  423    357  cat vars.example
+  424    358  vim vars
+  425    359  cat vars
+  426    360  ls
+  427    361  ./easyrsa init-pki
+  428    362  ./easyrsa build-ca
+  429    363  ls
+  430    364  ls pki
+  431    365  ls pki/private/
+  432    366  ./easyrsa gen-req demovpn nopass
+  433    367  ls pki/reqs/demovpn.req
+  434    368  cat pki/reqs/demovpn.req
+  435    369  ./easyrsa sign-req server demovpn
+  436    370  cat pki/issued/demovpn.crt
+  437    371  openssl verify -CAfile pki/ca.crt pki/issued/demovpn.crt
+  438    372  ./easyrsa gen-dh
+  439    373  cp pki/ca.crt /etc/openvpn/server/
+  440    374  cp pki/dh.pem /etc/openvpn/server/
+  441    375  cp pki/private/demovpn.key /etc/openvpn/server/
+  442    376  cp pki/issued/demovpn.crt /etc/openvpn/server/
+  443    377  ./easyrsa gen-req client nopass
+  444    378  ./easyrsa sign-req client client
+  445    379*
+  446    380  ./easyrsa sign-req client jerry
+  447    381  ./easyrsa gen-req indra nopass
+  448    382  ./easyrsa sign-req client indra
+  449    383  cp pki/ca.crt /etc/openvpn/client/
+  450    384  ls /etc/openvpn/client/
+  451    385  cp pki/issued/client.crt /etc/openvpn/client/
+  452    386  cp pki/private/client.key /etc/openvpn/client/
+  453    387  ls  /etc/openvpn/client/
+  454    388  vi /etc/openvpn/server/server.conf
+  455    389  systemctl start openvpn-server@server
+  456    390  systemctl enable openvpn-server@server
+  457    391  systemctl status openvpn-server@server
+  458    392  systemctl start firewalld.service
+  459    393  systemctl enable firewalld.service
+  460    394  firewall-cmd --permanent --add-service=openvpn
+  461    395  firewall-cmd --permanent --zone=trusted --add-service=openvpn
+  462    396  firewall-cmd --permanent --zone=trusted --add-interface=tun0
+  463    397  firewall-cmd --add-masquerade
+  464    398  firewall-cmd --permanent --add-masquerade
+  465    399  tecadmin=$(ip route get 8.8.8.8 | awk 'NR==1 {print $(NF-2)}')
+  466    400  ip route get 8.8.8.8
+  467    401  firewall-cmd --permanent --direct --passthrough ipv4 -t nat -A POSTROUTING -s 10.8.0.0/24 -o ens33 -j MASQUERADE
+  468    402  firewall-cmd --reload
+  469    403  vim /etc/openvpn/client/client.ovpn
+  470    404  scp -r root@192.168.15.161:/etc/openvpn/client .
+  471    405  scp -r /etc/openvpn/client/ root@192.168.15.161:/root
+  472    406  cd /etc/openvpn/server/
+  473    407  vi server.conf
+  474    408  cat server.conf
+  475    409  systemctl restart openvpn-server@server
+  476    410  systemctl status openvpn-server@server
+  477    411  history
+  478  [root@master server]#
+  479    410  systemctl status openvpn-server@server
+  480  systemctl status openvpn-server@serversystemctl status openvpn-server@server
+  481  exit
+  482  systemctl restart NetworkManager
+  483  ip a
+  484  sytemctl stop openvpn-server@server
+  485  systemctl stop openvpn-server@server
+  486  systemctl status openvpn-server@server
+  487  init 6
+  488  systemctl restart NetworkManager
+  489  ip a
+  490  sytemctl stop openvpn-server@server
+  491  systemctl stop openvpn-server@server
+  492  systemctl status openvpn-server@server
+  493  init 6
+  494  ip a
+  495  systemctl restart NetworkManager
+  496  ip a
+  497  yum install epel-release
+  498  yum install openvpn -y
+  499  ip a
+  500  ping 10.10.10.133
+  501  cd client/
+  502  ll
+  503  openvpn --config client.ovpn 
+  504  route -n
+  505  history
+[root@master ~]# 

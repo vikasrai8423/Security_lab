@@ -1,0 +1,313 @@
+    1  init 0
+    2  ip a
+    3  history
+    4  exit
+    5  iptables -L
+    6  cat /proc/sys/net/ipv4/ip_forward
+    7  ip a 
+    8  systemctl status iptables
+    9  clear
+   10  iptables -A FORWARD -s 192.168.45.0/24 -d www.youtube.com -p tcp --dport=443 -j ACCEPT 
+   11  iptables -L
+   12  clear
+   13  iptables -A FORWARD -s 192.168.45.129/24 -d www.youtube.com -p tcp --dport=443 -j ACCEPT 
+   14  iptables -A FORWARD -d 192.168.45.129/24 -s www.youtube.com -p tcp --sport=443 -j ACCEPT 
+   15  iptables -A FORWARD -s 192.168.45.129/24 -d www.Microsoft.com -p tcp --dport=443 -j ACCEPT 
+   16  iptables -A FORWARD -d 192.168.45.129/24 -s www.Microsoft.com -p tcp --sport=443 -j ACCEPT 
+   17  iptables -A FORWARD -s 192.168.45.129/24 -d www.cisco.com -p tcp --dport=443 -j ACCEPT 
+   18  iptables -A FORWARD -d 192.168.45.129/24 -s www.cisco.com -p tcp --sport=443 -j ACCEPT 
+   19  history
+   20  iptables -L
+   21  iptables -t nat -L
+   22  clear
+   23  iptables -L
+   24  history
+   25  iptables -P FORWARD ACCEPT 
+   26  iptables -L
+   27  iptables -F
+   28  iptables -L
+   29  iptables -A FORWARD -s 192.168.45.133/24 -d www.youtube.com -p tcp --dport=443 -j ACCEPT
+   30  iptables -A FORWARD -d 192.168.45.133/24 -s www.youtube.com -p tcp --sport=443 -j ACCEPT 
+   31  iptables -A FORWARD -s 192.168.45.133/24 -d www.microsoft.com -p tcp --dport=443 -j ACCEPT
+   32  iptables -A FORWARD -d 192.168.45.133/24 -s www.microsoft.com -p tcp --sport=443 -j ACCEPT 
+   33  iptables -A FORWARD -s 192.168.45.133/24 -d www.cicso.com -p tcp --dport=443 -j ACCEPT
+   34  iptables -A FORWARD -d 192.168.45.133/24 -s www.cicso.com -p tcp --sport=443 -j ACCEPT 
+   35  iptables -L
+   36  iptables -A FORWARD -s 192.168.45.133/24 -d www.aws.amazon.com -p tcp --dport=443 -j ACCEPT
+   37  iptables -A FORWARD -d 192.168.45.133/24 -s www.aws.amazon.com -p tcp --sport=443 -j ACCEPT
+   38  iptables -L
+   39  iptables -A FORWARD -s 192.168.45.130/24 -d www.redhat.com -p tcp --dport=443 -j ACCEPT
+   40  iptables -A FORWARD -d 192.168.45.130/24 -s www.redhat.com -p tcp --sport=443 -j ACCEPT
+   41  history
+   42  iptables
+   43  iptables -L
+   44  iptables -F
+   45  iptables -P FORWARD DROP
+   46  iptables -L
+   47  systemctl restart iptables.service 
+   48  iptables -L
+   49  systemctl status firewalld.service 
+   50  iptables -A FORWARD -s 192.168.45.130/24 -d www.azure.com -p tcp --dport=443 -j ACCEPT
+   51  iptables -A FORWARD -d 192.168.45.130/24 -s www.azure.com -p tcp --sport=443 -j ACCEPT
+   52  iptables -A FORWARD -s 192.168.45.130/24 -d www.portal.azure.com -p tcp --dport=443 -j ACCEPT
+   53  iptables -A FORWARD -d 192.168.45.130/24 -s www.portal.azure.com -p tcp --sport=443 -j ACCEPT
+   54  iptables -A FORWARD -s 192.168.45.130/24 -d www.redhat.com -p tcp --dport=443 -j ACCEPT
+   55  iptables -A FORWARD -d 192.168.45.130/24 -s www.redhat.com -p tcp --sport=443 -j ACCEPT 
+   56  iptables -L
+   57  ls
+   58  cat ip_forward~ 
+   59  ls
+   60  clear
+   61  iptables -L
+   62  iptables -F
+   63  iptables L
+   64  iptables -L
+   65  iptables -A FORWARD -s 192.168.45.130/24 -d www.youtube.com -p tcp --dport=443 -m state --state NEW,ESTABLISHED -j ACCEPT
+   66  iptables -A FORWARD -d 192.168.45.130/24 -s www.youtube.com -p tcp --sport=443 -m state --state NEW,ESTABLISHED -j ACCEPT
+   67  clear
+   68  iptables -A FORWARD -s 192.168.45.0/24 -d 192.168.30.2 -p udp --dport 53 -j ACCEPT 
+   69  iptables -A FORWARD -d 192.168.45.0/24 -s 192.168.30.2 -p udp --sport 53 -j ACCEPT 
+   70  iptables -l
+   71  iptables -L
+   72  clear
+   73  lsss
+   74  ls
+   75  iptables -A INPUT -i 192.168.30.136/24 -p icmp --icmp-type echo-request -j DROP 
+   76  iptables -A INPUT -i 192.168.30.136/24 -P icmp --icmp-type echo-request -j DROP 
+   77  iptables -A INPUT -d 192.168.30.136/24 -p icmp --icmp-type echo-request -j DROP 
+   78  #iptables -A INPUT -i ens33 -p icmp --icmp-type echo-request -j DROP 
+   79  iptables -A INPUT -i ens33 -p icmp -m limit --limit 5/s -j ACCEPT
+   80  iptables -A INPUT -i ens37 -p icmp -m limit --limit 5/s -j ACCEPT
+   81  ip a
+   82  iptables -A INPUT -i ens37 -p icmp -m limit --limit 5/s -j ACCEPT
+   83  iptables -A INPUT -i ens33 -p icmp -m limit --limit 5/s -j ACCEPT
+   84  iptables -L
+   85  iptables -D INPUT 1
+   86  iptables -L
+   87  iptables -D INPUT 2
+   88  iptables -L
+   89  iptables -D INPUT 2
+   90  iptables -A INPUT -i ens33 -p icmp -m length --length 1:128 -j ACCEPT
+   91  iptables -L
+   92  iptables -D INPUT 1
+   93  iptables -L
+   94  iptables -D INPUT 1
+   95  iptables -A INPUT -i ens33 -p icmp -m length --length 128 -j ACCEPT
+   96  iptables -A INPUT -i ens33 -p icmp -m length --length >128 -j DROP
+   97  iptables -A INPUT -i ens33 -p icmp -m length --length 128:65500 -j DROP
+   98  iptables -L
+   99  iptables -D INPUT 1
+  100  iptables -A INPUT -i ens33 -p icmp -m length --length 128:65500 -j ACCEPT
+  101  iptables -D INPUT 1
+  102  iptables -L
+  103  iptables -F
+  104  iptables
+  105  iptables -L
+  106  iptables -A INPUT -i ens33 -p icmp -m length --length 128:65500 -j DROP
+  107  iptables -L
+  108  iptables -F
+  109  iptables -A INPUT -i ens33 -p icmp -m length --length 128:65500 -j DROP
+  110  ip a
+  111  iptables -L
+  112  iptables -A INPUT -d 192.168.30.136 -p icmp -m length --length 128:65500 -j DROP
+  113  iptables -L
+  114  iptables -D INPUT 1
+  115  iptables -L
+  116  systemctl status iptables.service 
+  117  systemctl restart iptables.service 
+  118  systemctl status iptables.service 
+  119  iptables -L
+  120  iptables -F
+  121  iptables -A INPUT -i ens33 -p icmp -m length --length 128:65500 -j DROP
+  122  ifdown ens33
+  123  ifup ens33
+  124  ip a
+  125  iptables -L
+  126  iptables -F
+  127  iptables -A INPUT -d 192.168.30.136 -p icmp -m length --length 128:65500 -j DROP
+  128  iptables -A INPUT -i interface -p icmp --icmp-type echo-request --length 500 -j DROP
+  129  iptables -A INPUT -i interface -p icmp --icmp-type echo-request --length 128:65500 -j DROP
+  130* 
+  131  iptables -A INPUT -i interface -p icmp --icmp-type echo-request --length 128:65500 -j DROP
+  132  iptables -A INPUT -i interface -p icmp --icmp-type echo-request -m --length 128:65500 -j DROP
+  133  iptables -A INPUT -i interface -p icmp --icmp-type echo-request -m length --length 128:65500 -j DROP
+  134  iptables -L
+  135  iptables -D INPUT 1
+  136  iptables -L
+  137  iptables -D INPUT 1
+  138  iptables -A INPUT -i ens33 -p icmp -m length --length 128:65500 -j DROP
+  139  iptables -L
+  140  ip a
+  141  iptables -L
+  142  ip a  | grep inet
+  143  ip a  | grep 192
+  144  clear
+  145  yum install squid
+  146  cd /etc/squid/
+  147  ls
+  148  cd squid.conf
+  149  cd squid.cpnf
+  150  cd squid.conf
+  151  vim squid.conf
+  152  ls /var/spool/squid/
+  153  squid -z 
+  154  ls /var/spool/squid/
+  155  ls /var/spool/squid/00
+  156  systemctl start squid.service 
+  157  systemctl status squid.service 
+  158  ls
+  159  systemctl enable squid.service 
+  160* 
+  161  iptables -P FORWARD ACCEPT 
+  162  iptables -l
+  163  iptables -L
+  164  systemctl restart iptables.service 
+  165  vi squid.conf
+  166  vim squid.conf
+  167  iptables -A FORWARD -s 192.168.45.0/24 -d 192.168.30.2 -p udp --dport 53 -j ACCEPT 
+  168  iptables -A FORWARD -d 192.168.45.0/24 -s 192.168.30.2 -p udp --sport 53 -j ACCEPT 
+  169  vim squid.conf
+  170  systemctl restart squid.service 
+  171  vim squid.conf
+  172  vim blocked_sites.txt
+  173  systemctl restart squid.service 
+  174  systemctl status squid.service 
+  175  cat blocked_sites.txt
+  176  iptables -L
+  177  iptables -A FORWARD -s 192.168.45.0/24 -d 192.168.30.2 -p udp --dport 53 -j ACCEPT 
+  178  iptables -A FORWARD -d 192.168.45.0/24 -s 192.168.30.2 -p udp --sport 53 -j ACCEPT 
+  179  iptables -P FORWARD ACCEPT 
+  180  iptables -L
+  181  iptables -F
+  182  systemctl status iptables.service 
+  183  systemctl stop iptables.service 
+  184  systemctl status iptables.service 
+  185  vim squid.conf
+  186  vim client1-blocked.txt
+  187  systemctl restart squid.service 
+  188  systemctl status squid.service 
+  189  cat client1-blocked.txt
+  190  vim squid.conf
+  191  systemctl restart squid.service 
+  192  systemctl status squid.service 
+  193  vim squid.conf
+  194  systemctl restart squid.service 
+  195  vim squid.conf
+  196  systemctl restart squid.service 
+  197  vim squid.conf
+  198  vim badwords.txt
+  199  vim squid.conf
+  200  systemctl restart squid.service 
+  201  systemctl status squid.service 
+  202  ls
+  203  clear
+  204  pwd
+  205  clear
+  206  ls
+  207  ll
+  208  history
+  209  iptables -L
+  210  clear
+  211  iptables -L
+  212  clera
+  213  clear
+  214  iptables -t nat -L
+  215  iptables -t nat -F
+  216  iptables -A INPUT -s 192.168.45.0/24 -p tcp --dport 3128 -j ACCEPT 
+  217  yum install squid
+  218  ls /var/spool/squid/
+  219  cat squid.conf
+  220  cat -n squid.conf
+  221  ip a | grep inet
+  222  ip a
+  223  systemctl restart squid.service 
+  224  ls
+  225  cat blocked_sites.txt 
+  226  cat badwords.txt 
+  227  cat client1-blocked.txt 
+  228  vim squid.conf
+  229  vim client2-blocked.txt 
+  230  vim client1-blocked.txt 
+  231  vim client2-blocked.txt 
+  232  vim client1-blocked.txt 
+  233  vim squid.conf
+  234  ls
+  235  cat blocked_sites.txt 
+  236  vim blocked_sites.txt 
+  237  vim squid.conf
+  238  systemctl restart squid.service 
+  239  vim squid.conf
+  240  cat blocked_sites.txt 
+  241  vim squid.conf
+  242  cat blocked_sites.txt 
+  243  vim client1-blocked.txt 
+  244  vim client2-blocked.txt 
+  245  cat badwords.txt 
+  246  timedatectl set-time '2023-06-24 16:19:50'
+  247  vim squid.conf
+  248  vim website1.txt
+  249  vim website2.txt
+  250  vim squid.conf
+  251  systemctl restart squid.service 
+  252  vim squid.conf
+  253  systemctl restart squid.service 
+  254  cat website1.txt
+  255  systemctl restart squid.service 
+  256  vim squid.conf
+  257  cat website1.txt
+  258  vim squid.conf
+  259  systemctl restart squid.service 
+  260  systemctl status squid.service 
+  261  vim squid.conf
+  262  systemctl restart squid.service 
+  263  vim squid.conf
+  264  systemctl restart squid.service 
+  265  date
+  266  vim squid.conf
+  267  systemctl restart squid.service 
+  268  vim squid.conf
+  269  systemctl status squid
+  270  vim squid.conf
+  271  systemctl restart squid.service 
+  272  systemctl status squid
+  273  date
+  274  ls
+  275  cat website1.txt 
+  276  vi website1.txt 
+  277  systemctl restart squid.service 
+  278  vim squid.conf
+  279  vi website2.txt 
+  280  systemctl restart squid.service 
+  281  vim squid.conf
+  282  ls
+  283  cat badwords.txt 
+  284  vim squid.conf
+  285  vim director.txt
+  286  vim squid.conf
+  287  systemctl restart squid.service 
+  288  ls
+  289  vim squid.conf
+  290  cat badwords.txt 
+  291  vim squid.conf
+  292  systemctl restart squid.service 
+  293  vim squid.conf
+  294  cat director.txt 
+  295  vim squid.conf
+  296  cp squid.conf /root/squid_backup.conf
+  297  cd
+  298  ls
+  299  cat squid_backup.conf 
+  300  cd /etc/squid/
+  301  ls
+  302  vim squid.conf
+  303  htpasswd
+  304  yum install httpd-tools
+  305  htpasswd
+  306  htpasswd -c /etc/squid/squid-users user1
+  307  cat /etc/squid/squid-users 
+  308  systemctl restart squid.service 
+  309  systemctl status squid.service 
+  310  vim squid.conf
+  311  firefox
+  312  history
+  313  history > history.txt

@@ -1,0 +1,465 @@
+[root@server ~]# systemctl status firewalld.service 
+● firewalld.service - firewalld - dynamic firewall daemon
+   Loaded: loaded (/usr/lib/systemd/system/firewalld.service; enabled; vendor preset: enabled)
+   Active: active (running) since Mon 2023-07-03 09:57:14 IST; 1 day 7h ago
+     Docs: man:firewalld(1)
+ Main PID: 777 (firewalld)
+    Tasks: 2
+   CGroup: /system.slice/firewalld.service
+           └─777 /usr/bin/python2 -Es /usr/sbin/firewalld --nofork --nopid
+
+Jul 03 17:09:04 client firewalld[777]: WARNING: COMMAND_FAILED: '/usr/sbin/...).
+Jul 03 17:09:04 client firewalld[777]: WARNING: COMMAND_FAILED: '/usr/sbin/...).
+Jul 03 17:09:04 client firewalld[777]: WARNING: COMMAND_FAILED: '/usr/sbin/...e.
+Jul 03 17:09:04 client firewalld[777]: WARNING: COMMAND_FAILED: '/usr/sbin/...e.
+Jul 03 17:09:04 client firewalld[777]: WARNING: COMMAND_FAILED: '/usr/sbin/...).
+Jul 03 17:09:04 client firewalld[777]: WARNING: COMMAND_FAILED: '/usr/sbin/...).
+Jul 03 17:09:04 client firewalld[777]: WARNING: COMMAND_FAILED: '/usr/sbin/...).
+Jul 03 17:09:04 client firewalld[777]: WARNING: COMMAND_FAILED: '/usr/sbin/...).
+Jul 03 17:09:04 client firewalld[777]: WARNING: COMMAND_FAILED: '/usr/sbin/...).
+Jul 04 10:58:45 server firewalld[777]: WARNING: ALREADY_ENABLED: 'http' alr...c'
+Hint: Some lines were ellipsized, use -l to show in full.
+[root@server ~]# firewall-cmd --list-all
+public (active)
+  target: default
+  icmp-block-inversion: no
+  interfaces: ens33 ens37
+  sources: 
+  services: dhcpv6-client http openvpn ssh
+  ports: 
+  protocols: 
+  masquerade: yes
+  forward-ports: 
+  source-ports: 
+  icmp-blocks: 
+  rich rules: 
+	
+[root@server ~]# firewall-cmd --list-all-zones | less 
+[root@server ~]# firewall-cmd --list-all-zones 
+block
+  target: %%REJECT%%
+  icmp-block-inversion: no
+  interfaces: 
+  sources: 
+  services: 
+  ports: 
+  protocols: 
+  masquerade: no
+  forward-ports: 
+  source-ports: 
+  icmp-blocks: 
+  rich rules: 
+	
+
+dmz
+  target: default
+  icmp-block-inversion: no
+  interfaces: 
+  sources: 
+  services: ssh
+  ports: 
+  protocols: 
+  masquerade: no
+  forward-ports: 
+  source-ports: 
+  icmp-blocks: 
+  rich rules: 
+	
+
+drop
+  target: DROP
+  icmp-block-inversion: no
+  interfaces: 
+  sources: 
+  services: 
+  ports: 
+  protocols: 
+  masquerade: no
+  forward-ports: 
+  source-ports: 
+  icmp-blocks: 
+  rich rules: 
+	
+
+external
+  target: default
+  icmp-block-inversion: no
+  interfaces: 
+  sources: 
+  services: ssh
+  ports: 
+  protocols: 
+  masquerade: yes
+  forward-ports: 
+  source-ports: 
+  icmp-blocks: 
+  rich rules: 
+	
+
+home
+  target: default
+  icmp-block-inversion: no
+  interfaces: 
+  sources: 
+  services: dhcpv6-client mdns samba-client ssh
+  ports: 
+  protocols: 
+  masquerade: no
+  forward-ports: 
+  source-ports: 
+  icmp-blocks: 
+  rich rules: 
+	
+
+internal
+  target: default
+  icmp-block-inversion: no
+  interfaces: 
+  sources: 
+  services: dhcpv6-client mdns samba-client ssh
+  ports: 
+  protocols: 
+  masquerade: no
+  forward-ports: 
+  source-ports: 
+  icmp-blocks: 
+  rich rules: 
+	
+
+public (active)
+  target: default
+  icmp-block-inversion: no
+  interfaces: ens33 ens37
+  sources: 
+  services: dhcpv6-client http openvpn ssh
+  ports: 
+  protocols: 
+  masquerade: yes
+  forward-ports: 
+  source-ports: 
+  icmp-blocks: 
+  rich rules: 
+	
+
+trusted (active)
+  target: ACCEPT
+  icmp-block-inversion: no
+  interfaces: tun0
+  sources: 
+  services: openvpn
+  ports: 
+  protocols: 
+  masquerade: no
+  forward-ports: 
+  source-ports: 
+  icmp-blocks: 
+  rich rules: 
+	
+
+work
+  target: default
+  icmp-block-inversion: no
+  interfaces: 
+  sources: 
+  services: dhcpv6-client ssh
+  ports: 
+  protocols: 
+  masquerade: no
+  forward-ports: 
+  source-ports: 
+  icmp-blocks: 
+  rich rules: 
+	
+
+[root@server ~]# firewall-cmd --get-active-zones 
+public
+  interfaces: ens37 ens33
+trusted
+  interfaces: tun0
+[root@server ~]# firewall-cmd --zone=trusted --list-all 
+trusted (active)
+  target: ACCEPT
+  icmp-block-inversion: no
+  interfaces: tun0
+  sources: 
+  services: openvpn
+  ports: 
+  protocols: 
+  masquerade: no
+  forward-ports: 
+  source-ports: 
+  icmp-blocks: 
+  rich rules: 
+	
+[root@server ~]# firewall-cmd --zone=trusted --list-interfaces
+tun0
+[root@server ~]# firewall-cmd --zone=public --list-interfaces
+ens37 ens33
+[root@server ~]# #firewall-cmd --zone=public --remove-interfaces 
+[root@server ~]# #firewall-cmd --zone=public --remove-interfaces=ens37
+[root@server ~]# firewall-cmd --zone=public --remove-interfaces=ens37
+usage: see firewall-cmd man page
+firewall-cmd: error: unrecognized arguments: --remove-interfaces=ens37
+[root@server ~]# firewall-cmd --zone=public --add-interfaces=ens38
+usage: see firewall-cmd man page
+firewall-cmd: error: unrecognized arguments: --add-interfaces=ens38
+[root@server ~]# firewall-cmd --zone=public --add-interface=ens38
+success
+[root@server ~]# firewall-cmd --zone=public --list-interfaces
+ens37 ens33 ens38
+[root@server ~]# #firewall-cmd --zone=public --remove-interface=ens38
+[root@server ~]# firewall-cmd --zone=public --list-interfaces
+ens37 ens33 ens38
+[root@server ~]# #firewall-cmd --zone=public --remove-interface=ens38
+[root@server ~]# firewall-cmd --get-active-zones 
+public
+  interfaces: ens37 ens33 ens38
+trusted
+  interfaces: tun0
+[root@server ~]# firewall-cmd --zone=public --remove-interface=ens38
+success
+[root@server ~]# firewall-cmd --zone=public --list-interfaces
+ens37 ens33
+[root@server ~]# firewall-cmd --add-zone=hpcsa
+usage: see firewall-cmd man page
+firewall-cmd: error: unrecognized arguments: --add-zone=hpcsa
+[root@server ~]# firewall-cmd --help | grep zones
+  --get-active-zones   Print currently active zones
+  --get-zones          Print predefined zones [P]
+  --list-all-zones     List everything added for or enabled in all zones [P]
+[root@server ~]# firewall-cmd --new-zone=hpcsa
+usage: see firewall-cmd man page
+Option can be used only with --permanent.
+[root@server ~]# firewall-cmd --new-zone=hpcsa --permanent
+success
+[root@server ~]# firewall-cmd --list-all-zones | grep hpcsa
+[root@server ~]# firewall-cmd --reload 
+success
+[root@server ~]# firewall-cmd --list-all-zones | grep hpcsa
+hpcsa
+[root@server ~]# firewall-cmd --zone=work --list-interfaces 
+
+[root@server ~]# firewall-cmd --zone=public --list-interfaces 
+ens37 ens33
+[root@server ~]# firewall-cmd --zone=hpcsa --list-all 
+hpcsa
+  target: default
+  icmp-block-inversion: no
+  interfaces: 
+  sources: 
+  services: 
+  ports: 
+  protocols: 
+  masquerade: no
+  forward-ports: 
+  source-ports: 
+  icmp-blocks: 
+  rich rules: 
+	
+[root@server ~]# ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: ens33: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 00:0c:29:00:f6:60 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.15.161/24 brd 192.168.15.255 scope global noprefixroute dynamic ens33
+       valid_lft 1091sec preferred_lft 1091sec
+    inet6 fe80::5d80:9c3:bd66:845d/64 scope link noprefixroute 
+       valid_lft forever preferred_lft forever
+3: virbr0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default qlen 1000
+    link/ether 52:54:00:bf:d4:6a brd ff:ff:ff:ff:ff:ff
+4: virbr0-nic: <BROADCAST,MULTICAST> mtu 1500 qdisc pfifo_fast master virbr0 state DOWN group default qlen 1000
+    link/ether 52:54:00:bf:d4:6a brd ff:ff:ff:ff:ff:ff
+7: ens37: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 00:0c:29:00:f6:6a brd ff:ff:ff:ff:ff:ff
+    inet 10.10.10.134/24 brd 10.10.10.255 scope global noprefixroute dynamic ens37
+       valid_lft 1010sec preferred_lft 1010sec
+    inet6 fe80::7e9e:5296:2640:b3ec/64 scope link noprefixroute 
+       valid_lft forever preferred_lft forever
+9: tun0: <POINTOPOINT,MULTICAST,NOARP,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UNKNOWN group default qlen 100
+    link/none 
+[root@server ~]# firewall-cmd --zone=hpcsa --add-interface=ens37
+Error: ZONE_CONFLICT: 'ens37' already bound to a zone
+[root@server ~]# firewall-cmd --zone=hpcsa --add-interface=ens33
+Error: ZONE_CONFLICT: 'ens33' already bound to a zone
+[root@server ~]# firewall-cmd --zone=public --add-interface=ens33
+Warning: ZONE_ALREADY_SET: 'ens33' already bound to 'public'
+success
+[root@server ~]# firewall-cmd --zone=public --remove-interface=ens33
+success
+[root@server ~]# firewall-cmd --zone=hpcsa --add-interface=ens33
+success
+[root@server ~]# firewall-cmd --zone=hpcsa --list-all
+hpcsa (active)
+  target: default
+  icmp-block-inversion: no
+  interfaces: ens33
+  sources: 
+  services: 
+  ports: 
+  protocols: 
+  masquerade: no
+  forward-ports: 
+  source-ports: 
+  icmp-blocks: 
+  rich rules: 
+	
+[root@server ~]# firewall-cmd --list-services
+dhcpv6-client openvpn ssh
+[root@server ~]# firewall-cmd --list-services --zone=hpcsa
+
+[root@server ~]# firewall-cmd --get-services 
+RH-Satellite-6 RH-Satellite-6-capsule amanda-client amanda-k5-client amqp amqps apcupsd audit bacula bacula-client bgp bitcoin bitcoin-rpc bitcoin-testnet bitcoin-testnet-rpc ceph ceph-mon cfengine condor-collector ctdb dhcp dhcpv6 dhcpv6-client distcc dns docker-registry docker-swarm dropbox-lansync elasticsearch etcd-client etcd-server finger freeipa-ldap freeipa-ldaps freeipa-replication freeipa-trust ftp ganglia-client ganglia-master git gre high-availability http https imap imaps ipp ipp-client ipsec irc ircs iscsi-target isns jenkins kadmin kerberos kibana klogin kpasswd kprop kshell ldap ldaps libvirt libvirt-tls lightning-network llmnr managesieve matrix mdns minidlna mongodb mosh mountd mqtt mqtt-tls ms-wbt mssql murmur mysql nfs nfs3 nmea-0183 nrpe ntp nut openvpn ovirt-imageio ovirt-storageconsole ovirt-vmconsole plex pmcd pmproxy pmwebapi pmwebapis pop3 pop3s postgresql privoxy proxy-dhcp ptp pulseaudio puppetmaster quassel radius redis rpc-bind rsh rsyncd rtsp salt-master samba samba-client samba-dc sane sip sips slp smtp smtp-submission smtps snmp snmptrap spideroak-lansync squid ssh steam-streaming svdrp svn syncthing syncthing-gui synergy syslog syslog-tls telnet tftp tftp-client tinc tor-socks transmission-client upnp-client vdsm vnc-server wbem-http wbem-https wsman wsmans xdmcp xmpp-bosh xmpp-client xmpp-local xmpp-server zabbix-agent zabbix-server
+[root@server ~]# firewall-cmd --get-services | ssh
+usage: ssh [-1246AaCfGgKkMNnqsTtVvXxYy] [-b bind_address] [-c cipher_spec]
+           [-D [bind_address:]port] [-E log_file] [-e escape_char]
+           [-F configfile] [-I pkcs11] [-i identity_file]
+           [-J [user@]host[:port]] [-L address] [-l login_name] [-m mac_spec]
+           [-O ctl_cmd] [-o option] [-p port] [-Q query_option] [-R address]
+           [-S ctl_path] [-W host:port] [-w local_tun[:remote_tun]]
+           [user@]hostname [command]
+[root@server ~]# firewall-cmd --get-services | mysql
+bash: mysql: command not found...
+[root@server ~]# firewall-cmd --add-service=ssh --zone=hpcsa 
+success
+[root@server ~]# firewall-cmd --zone=hpcsa --list-all
+hpcsa (active)
+  target: default
+  icmp-block-inversion: no
+  interfaces: ens33
+  sources: 
+  services: ssh
+  ports: 
+  protocols: 
+  masquerade: no
+  forward-ports: 
+  source-ports: 
+  icmp-blocks: 
+  rich rules: 
+	
+[root@server ~]# firewall-cmd --remove--service=ssh --zone=hpcsa 
+usage: see firewall-cmd man page
+firewall-cmd: error: unrecognized arguments: --remove--service=ssh
+[root@server ~]# firewall-cmd --remove-service=ssh --zone=hpcsa 
+success
+[root@server ~]# firewall-cmd --add-port=22/tcp --zone=hpcsa 
+success
+[root@server ~]# firewall-cmd --list-all --zone=hpcsa 
+hpcsa (active)
+  target: default
+  icmp-block-inversion: no
+  interfaces: ens33
+  sources: 
+  services: 
+  ports: 22/tcp
+  protocols: 
+  masquerade: no
+  forward-ports: 
+  source-ports: 
+  icmp-blocks: 
+  rich rules: 
+	
+[root@server ~]# firewall-cmd --add-service=http --zone=hpcsa 
+success
+[root@server ~]# firewall-cmd --list-all --zone=hpcsa 
+hpcsa (active)
+  target: default
+  icmp-block-inversion: no
+  interfaces: ens33
+  sources: 
+  services: http
+  ports: 22/tcp
+  protocols: 
+  masquerade: no
+  forward-ports: 
+  source-ports: 
+  icmp-blocks: 
+  rich rules: 
+	
+[root@server ~]# firewall-cmd --add-port={443/tcp,53/udp,3306/tcp} --zone=hpcsa
+success
+[root@server ~]# firewall-cmd --list-all --zone=hpcsa 
+hpcsa (active)
+  target: default
+  icmp-block-inversion: no
+  interfaces: ens33
+  sources: 
+  services: http
+  ports: 22/tcp 443/tcp 53/udp 3306/tcp
+  protocols: 
+  masquerade: no
+  forward-ports: 
+  source-ports: 
+  icmp-blocks: 
+  rich rules: 
+	
+[root@server ~]# firewall-cmd --add-port=2500-3000/tcp --zone=hpcsa
+success
+[root@server ~]# firewall-cmd --remove-port=2500-3000/tcp --zone=hpcsa
+success
+[root@server ~]# firewall-cmd --add-protocol=icmp --zone=hpcsa
+success
+[root@server ~]# firewall-cmd --remove-protocol=icmp --zone=hpcsa
+success
+[root@server ~]# firewall-cmd --query-icmp-block echo-request 
+no
+[root@server ~]# firewall-cmd --query-icmp-block echo-request --zone=hpcsa 
+no
+[root@server ~]# firewall-cmd --add-icmp-block echo-request --zone=hpcsa 
+success
+[root@server ~]# firewall-cmd --list-all --zone=hpcsa 
+hpcsa (active)
+  target: default
+  icmp-block-inversion: no
+  interfaces: ens33
+  sources: 
+  services: http
+  ports: 22/tcp 443/tcp 53/udp 3306/tcp
+  protocols: 
+  masquerade: no
+  forward-ports: 
+  source-ports: 
+  icmp-blocks: echo-request
+  rich rules: 
+	
+[root@server ~]# firewall-cmd --zone=hpcsa --add-rich-rule='rule family=ipv4 source address=172.16.10.0/24 service name=ssh accept'
+success
+[root@server ~]# firewall-cmd --list-all --zone=hpcsa 
+hpcsa (active)
+  target: default
+  icmp-block-inversion: no
+  interfaces: ens33
+  sources: 
+  services: http
+  ports: 22/tcp 443/tcp 53/udp 3306/tcp
+  protocols: 
+  masquerade: no
+  forward-ports: 
+  source-ports: 
+  icmp-blocks: echo-request
+  rich rules: 
+	rule family="ipv4" source address="172.16.10.0/24" service name="ssh" accept
+[root@server ~]# firewall-cmd --zone=hpcsa --add-rich-rule='rule family=ipv4 source address=172.16.10.0/24 service name=ssh accept' --permanent
+success
+[root@server ~]# cd /etc/firewalld/
+[root@server firewalld]# ls
+direct.xml  firewalld.conf  helpers  icmptypes  ipsets  lockdown-whitelist.xml  services  zones
+[root@server firewalld]# cd zones/
+[root@server zones]# ls
+hpcsa.xml  hpcsa.xml.old  public.xml  public.xml.old  trusted.xml  trusted.xml.old
+[root@server zones]# vim hpcsa.xml
+[root@server zones]# cd ..
+[root@server firewalld]# cd services/
+[root@server services]# ls
+[root@server services]# cd ..
+[root@server firewalld]# ls
+direct.xml  firewalld.conf  helpers  icmptypes  ipsets  lockdown-whitelist.xml  services  zones
+[root@server firewalld]# cat direct.xml 
+<?xml version="1.0" encoding="utf-8"?>
+<direct>
+  <passthrough ipv="ipv4">-t nat -A POSTROUTING -s 10.8.0.0/24 -o ens33 -j MASQUERADE</passthrough>
+</direct>
+[root@server firewalld]# 

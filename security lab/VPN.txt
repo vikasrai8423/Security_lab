@@ -1,0 +1,1 @@
+https://github.com/OpenVPN/openvpn/blob/master/sample/sample-config-files/server.conf

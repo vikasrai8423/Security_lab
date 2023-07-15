@@ -1,0 +1,669 @@
+[root@server ~]# ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: ens33: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 00:0c:29:00:f6:60 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.15.161/24 brd 192.168.15.255 scope global noprefixroute dynamic ens33
+       valid_lft 1052sec preferred_lft 1052sec
+    inet6 fe80::5d80:9c3:bd66:845d/64 scope link noprefixroute 
+       valid_lft forever preferred_lft forever
+3: virbr0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default qlen 1000
+    link/ether 52:54:00:bf:d4:6a brd ff:ff:ff:ff:ff:ff
+4: virbr0-nic: <BROADCAST,MULTICAST> mtu 1500 qdisc pfifo_fast master virbr0 state DOWN group default qlen 1000
+    link/ether 52:54:00:bf:d4:6a brd ff:ff:ff:ff:ff:ff
+7: ens37: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 00:0c:29:00:f6:6a brd ff:ff:ff:ff:ff:ff
+    inet 10.10.10.134/24 brd 10.10.10.255 scope global noprefixroute dynamic ens37
+       valid_lft 1067sec preferred_lft 1067sec
+    inet6 fe80::7e9e:5296:2640:b3ec/64 scope link noprefixroute 
+       valid_lft forever preferred_lft forever
+9: tun0: <POINTOPOINT,MULTICAST,NOARP,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UNKNOWN group default qlen 100
+    link/none 
+[root@server ~]# curl http://10.10.10.135
+curl: (7) Failed connect to 10.10.10.135:80; No route to host
+[root@server ~]# curl http://10.10.10.135
+This websites is hosted by linux
+[root@server ~]# curl http://10.10.10.133
+This is windows server hosted[root@server ~]# 
+[root@server ~]# yum install nginx
+Loaded plugins: fastestmirror, langpacks
+Loading mirror speeds from cached hostfile
+epel/x86_64/metalink                                     | 6.7 kB     00:00     
+ * base: bd.mirror.vanehost.com
+ * epel: epel.excellmedia.net
+ * extras: bd.mirror.vanehost.com
+ * updates: bd.mirror.vanehost.com
+base                                                     | 3.6 kB     00:00     
+extras                                                   | 2.9 kB     00:00     
+updates                                                  | 2.9 kB     00:00     
+Resolving Dependencies
+--> Running transaction check
+---> Package nginx.x86_64 1:1.20.1-10.el7 will be installed
+--> Processing Dependency: nginx-filesystem = 1:1.20.1-10.el7 for package: 1:nginx-1.20.1-10.el7.x86_64
+--> Processing Dependency: libcrypto.so.1.1(OPENSSL_1_1_0)(64bit) for package: 1:nginx-1.20.1-10.el7.x86_64
+--> Processing Dependency: libssl.so.1.1(OPENSSL_1_1_0)(64bit) for package: 1:nginx-1.20.1-10.el7.x86_64
+--> Processing Dependency: libssl.so.1.1(OPENSSL_1_1_1)(64bit) for package: 1:nginx-1.20.1-10.el7.x86_64
+--> Processing Dependency: nginx-filesystem for package: 1:nginx-1.20.1-10.el7.x86_64
+--> Processing Dependency: libcrypto.so.1.1()(64bit) for package: 1:nginx-1.20.1-10.el7.x86_64
+--> Processing Dependency: libssl.so.1.1()(64bit) for package: 1:nginx-1.20.1-10.el7.x86_64
+--> Running transaction check
+---> Package nginx-filesystem.noarch 1:1.20.1-10.el7 will be installed
+---> Package openssl11-libs.x86_64 1:1.1.1k-5.el7 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+================================================================================
+ Package                 Arch          Version                Repository   Size
+================================================================================
+Installing:
+ nginx                   x86_64        1:1.20.1-10.el7        epel        588 k
+Installing for dependencies:
+ nginx-filesystem        noarch        1:1.20.1-10.el7        epel         24 k
+ openssl11-libs          x86_64        1:1.1.1k-5.el7         epel        1.5 M
+
+Transaction Summary
+================================================================================
+Install  1 Package (+2 Dependent packages)
+
+Total download size: 2.1 M
+Installed size: 5.3 M
+Is this ok [y/d/N]: y
+Downloading packages:
+(1/3): nginx-filesystem-1.20.1-10.el7.noarch.rpm           |  24 kB   00:00     
+(2/3): nginx-1.20.1-10.el7.x86_64.rpm                      | 588 kB   00:00     
+(3/3): openssl11-libs-1.1.1k-5.el7.x86_64.rpm              | 1.5 MB   00:05     
+--------------------------------------------------------------------------------
+Total                                              365 kB/s | 2.1 MB  00:05     
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : 1:openssl11-libs-1.1.1k-5.el7.x86_64                         1/3 
+  Installing : 1:nginx-filesystem-1.20.1-10.el7.noarch                      2/3 
+  Installing : 1:nginx-1.20.1-10.el7.x86_64                                 3/3 
+  Verifying  : 1:nginx-filesystem-1.20.1-10.el7.noarch                      1/3 
+  Verifying  : 1:nginx-1.20.1-10.el7.x86_64                                 2/3 
+  Verifying  : 1:openssl11-libs-1.1.1k-5.el7.x86_64                         3/3 
+
+Installed:
+  nginx.x86_64 1:1.20.1-10.el7                                                  
+
+Dependency Installed:
+  nginx-filesystem.noarch 1:1.20.1-10.el7  openssl11-libs.x86_64 1:1.1.1k-5.el7 
+
+Complete!
+[root@server ~]# cd /etc/nginx/
+[root@server nginx]# pwd
+/etc/nginx
+[root@server nginx]# ls
+conf.d                  koi-utf             scgi_params
+default.d               koi-win             scgi_params.default
+fastcgi.conf            mime.types          uwsgi_params
+fastcgi.conf.default    mime.types.default  uwsgi_params.default
+fastcgi_params          nginx.conf          win-utf
+fastcgi_params.default  nginx.conf.default
+[root@server nginx]# 
+[root@server nginx]# vi nginx.conf
+[root@server nginx]# vi nginx.conf
+[root@server nginx]# vim nginx.conf
+[root@server nginx]# cd
+[root@server ~]# sysytemctl restart nginx
+bash: sysytemctl: command not found...
+[root@server ~]# systemctl restart nginx
+[root@server ~]# cat nginx.conf
+cat: nginx.conf: No such file or directory
+[root@server ~]# cat /etc/nginx/nginx.conf
+# For more information on configuration, see:
+#   * Official English Documentation: http://nginx.org/en/docs/
+#   * Official Russian Documentation: http://nginx.org/ru/docs/
+
+user nginx;
+worker_processes auto;
+error_log /var/log/nginx/error.log;
+pid /run/nginx.pid;
+
+# Load dynamic modules. See /usr/share/doc/nginx/README.dynamic.
+include /usr/share/nginx/modules/*.conf;
+
+events {
+    worker_connections 1024;
+}
+
+http {
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  /var/log/nginx/access.log  main;
+
+    sendfile            on;
+    tcp_nopush          on;
+    tcp_nodelay         on;
+    keepalive_timeout   65;
+    types_hash_max_size 4096;
+
+    include             /etc/nginx/mime.types;
+    default_type        application/octet-stream;
+
+    # Load modular configuration files from the /etc/nginx/conf.d directory.
+    # See http://nginx.org/en/docs/ngx_core_module.html#include
+    # for more information.
+    include /etc/nginx/conf.d/*.conf;
+
+    server {
+        listen       80;
+        listen       [::]:80;
+        server_name  _;
+        root         /usr/share/nginx/html;
+
+        # Load configuration files for the default server block.
+        include /etc/nginx/default.d/*.conf;
+
+        error_page 404 /404.html;
+        location = /404.html {
+        }
+
+        error_page 500 502 503 504 /50x.html;
+        location = /50x.html {
+        }
+	location / {
+		proxy_pass http://localhost/;
+	}
+	location /linuxu {
+		proxy_pass http://10.10.10.135/;
+	}
+	location /win {
+		proxy_pass http://10.10.10.133/;
+	}
+    }
+
+# Settings for a TLS enabled server.
+#
+#    server {
+#        listen       443 ssl http2;
+#        listen       [::]:443 ssl http2;
+#        server_name  _;
+#        root         /usr/share/nginx/html;
+#
+#        ssl_certificate "/etc/pki/nginx/server.crt";
+#        ssl_certificate_key "/etc/pki/nginx/private/server.key";
+#        ssl_session_cache shared:SSL:1m;
+#        ssl_session_timeout  10m;
+#        ssl_ciphers HIGH:!aNULL:!MD5;
+#        ssl_prefer_server_ciphers on;
+#
+#        # Load configuration files for the default server block.
+#        include /etc/nginx/default.d/*.conf;
+#
+#        error_page 404 /404.html;
+#            location = /40x.html {
+#        }
+#
+#        error_page 500 502 503 504 /50x.html;
+#            location = /50x.html {
+#        }
+#    }
+
+}
+
+[root@server ~]# sysytemctl status httpd
+bash: sysytemctl: command not found...
+[root@server ~]# systemctl status httpd
+● httpd.service - The Apache HTTP Server
+   Loaded: loaded (/usr/lib/systemd/system/httpd.service; disabled; vendor preset: disabled)
+   Active: inactive (dead)
+     Docs: man:httpd(8)
+           man:apachectl(8)
+[root@server ~]# systemctl start httpd
+Job for httpd.service failed because the control process exited with error code. See "systemctl status httpd.service" and "journalctl -xe" for details.
+[root@server ~]# firewall-cmd --add-service=http
+success
+[root@server ~]# systemctl status httpd
+● httpd.service - The Apache HTTP Server
+   Loaded: loaded (/usr/lib/systemd/system/httpd.service; disabled; vendor preset: disabled)
+   Active: failed (Result: exit-code) since Tue 2023-07-04 10:41:24 IST; 8min ago
+     Docs: man:httpd(8)
+           man:apachectl(8)
+  Process: 18013 ExecStart=/usr/sbin/httpd $OPTIONS -DFOREGROUND (code=exited, status=1/FAILURE)
+ Main PID: 18013 (code=exited, status=1/FAILURE)
+
+Jul 04 10:41:22 server systemd[1]: Starting The Apache HTTP Server...
+Jul 04 10:41:24 server httpd[18013]: AH00558: httpd: Could not reliably determine the server's fully qualified domain name, us...message
+Jul 04 10:41:24 server httpd[18013]: (98)Address already in use: AH00072: make_sock: could not bind to address [::]:80
+Jul 04 10:41:24 server httpd[18013]: (98)Address already in use: AH00072: make_sock: could not bind to address 0.0.0.0:80
+Jul 04 10:41:24 server httpd[18013]: no listening sockets available, shutting down
+Jul 04 10:41:24 server httpd[18013]: AH00015: Unable to open logs
+Jul 04 10:41:24 server systemd[1]: httpd.service: main process exited, code=exited, status=1/FAILURE
+Jul 04 10:41:24 server systemd[1]: Failed to start The Apache HTTP Server.
+Jul 04 10:41:24 server systemd[1]: Unit httpd.service entered failed state.
+Jul 04 10:41:24 server systemd[1]: httpd.service failed.
+Hint: Some lines were ellipsized, use -l to show in full.
+[root@server ~]# systemctl status firewalld.service
+● firewalld.service - firewalld - dynamic firewall daemon
+   Loaded: loaded (/usr/lib/systemd/system/firewalld.service; enabled; vendor preset: enabled)
+   Active: active (running) since Mon 2023-07-03 09:57:14 IST; 24h ago
+     Docs: man:firewalld(1)
+ Main PID: 777 (firewalld)
+    Tasks: 2
+   CGroup: /system.slice/firewalld.service
+           └─777 /usr/bin/python2 -Es /usr/sbin/firewalld --nofork --nopid
+
+Jul 03 17:09:04 client firewalld[777]: WARNING: COMMAND_FAILED: '/usr/sbin/iptables -w10 -w --table filter --delete FORWARD --...hain?).
+Jul 03 17:09:04 client firewalld[777]: WARNING: COMMAND_FAILED: '/usr/sbin/iptables -w10 -w --table filter --delete FORWARD --...hain?).
+Jul 03 17:09:04 client firewalld[777]: WARNING: COMMAND_FAILED: '/usr/sbin/iptables -w10 -w --table filter --delete FORWARD --...hain?).
+Jul 03 17:09:04 client firewalld[777]: WARNING: COMMAND_FAILED: '/usr/sbin/iptables -w10 -w --table filter --delete FORWARD --...t name.
+Jul 03 17:09:04 client firewalld[777]: WARNING: COMMAND_FAILED: '/usr/sbin/iptables -w10 -w --table filter --delete FORWARD --...t name.
+Jul 03 17:09:04 client firewalld[777]: WARNING: COMMAND_FAILED: '/usr/sbin/iptables -w10 -w --table filter --delete INPUT --in...hain?).
+Jul 03 17:09:04 client firewalld[777]: WARNING: COMMAND_FAILED: '/usr/sbin/iptables -w10 -w --table filter --delete INPUT --in...hain?).
+Jul 03 17:09:04 client firewalld[777]: WARNING: COMMAND_FAILED: '/usr/sbin/iptables -w10 -w --table filter --delete OUTPUT --o...hain?).
+Jul 03 17:09:04 client firewalld[777]: WARNING: COMMAND_FAILED: '/usr/sbin/iptables -w10 -w --table filter --delete INPUT --in...hain?).
+Jul 03 17:09:04 client firewalld[777]: WARNING: COMMAND_FAILED: '/usr/sbin/iptables -w10 -w --table filter --delete INPUT --in...hain?).
+Hint: Some lines were ellipsized, use -l to show in full.
+[root@server ~]# 
+[root@server ~]# 
+[root@server ~]# vi /etc/nginx/nginx.conf
+[root@server ~]# systemctl restart nginx
+[root@server ~]# cd /etc/nginx/
+[root@server nginx]# vi nginx.conf
+[root@server nginx]# vim nginx.conf
+[root@server nginx]# vim nginx.conf
+[root@server nginx]# systemctl restart nginx
+Job for nginx.service failed because the control process exited with error code. See "systemctl status nginx.service" and "journalctl -xe" for details.
+[root@server nginx]# journalctl -xe
+-- Unit session-96.scope has finished starting up.
+-- 
+-- The start-up result is done.
+Jul 04 12:01:01 server CROND[19573]: (root) CMD (run-parts /etc/cron.hourly)
+Jul 04 12:01:01 server run-parts(/etc/cron.hourly)[19576]: starting 0anacron
+Jul 04 12:01:01 server run-parts(/etc/cron.hourly)[19582]: finished 0anacron
+Jul 04 12:01:21 server polkitd[705]: Registered Authentication Agent for unix-process:19590:4427775 (system bus name :1.455 [/usr/bin/pk
+Jul 04 12:01:21 server systemd[1]: Stopping The nginx HTTP and reverse proxy server...
+-- Subject: Unit nginx.service has begun shutting down
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit nginx.service has begun shutting down.
+Jul 04 12:01:21 server systemd[1]: Stopped The nginx HTTP and reverse proxy server.
+-- Subject: Unit nginx.service has finished shutting down
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit nginx.service has finished shutting down.
+Jul 04 12:01:21 server systemd[1]: Starting The nginx HTTP and reverse proxy server...
+-- Subject: Unit nginx.service has begun start-up
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit nginx.service has begun starting up.
+Jul 04 12:01:21 server nginx[19601]: nginx: [emerg] unknown directive "http://10.10.10.135" in /etc/nginx/nginx.conf:39
+Jul 04 12:01:21 server nginx[19601]: nginx: configuration file /etc/nginx/nginx.conf test failed
+Jul 04 12:01:21 server systemd[1]: nginx.service: control process exited, code=exited status=1
+Jul 04 12:01:21 server systemd[1]: Failed to start The nginx HTTP and reverse proxy server.
+-- Subject: Unit nginx.service has failed
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit nginx.service has failed.
+-- 
+-- The result is failed.
+Jul 04 12:01:21 server systemd[1]: Unit nginx.service entered failed state.
+Jul 04 12:01:21 server systemd[1]: nginx.service failed.
+Jul 04 12:01:21 server polkitd[705]: Unregistered Authentication Agent for unix-process:19590:4427775 (system bus name :1.455, object pa
+[root@server nginx]# vim nginx.conf
+[root@server nginx]# systemctl restart nginx
+[root@server nginx]# cat nginx.conf
+# For more information on configuration, see:
+#   * Official English Documentation: http://nginx.org/en/docs/
+#   * Official Russian Documentation: http://nginx.org/ru/docs/
+
+user nginx;
+worker_processes auto;
+error_log /var/log/nginx/error.log;
+pid /run/nginx.pid;
+
+# Load dynamic modules. See /usr/share/doc/nginx/README.dynamic.
+include /usr/share/nginx/modules/*.conf;
+
+events {
+    worker_connections 1024;
+}
+
+http {
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  /var/log/nginx/access.log  main;
+
+    sendfile            on;
+    tcp_nopush          on;
+    tcp_nodelay         on;
+    keepalive_timeout   65;
+    types_hash_max_size 4096;
+
+    include             /etc/nginx/mime.types;
+    default_type        application/octet-stream;
+
+    # Load modular configuration files from the /etc/nginx/conf.d directory.
+    # See http://nginx.org/en/docs/ngx_core_module.html#include
+    # for more information.
+    include /etc/nginx/conf.d/*.conf;
+
+   upstream hpcsa {
+	server 10.10.10.135;
+	server 10.10.10.133;
+	}
+
+    server {
+        listen       80;
+        listen       [::]:80;
+        server_name  _;
+        root         /usr/share/nginx/html;
+
+        # Load configuration files for the default server block.
+        include /etc/nginx/default.d/*.conf;
+	
+	location / {
+                proxy_pass http://hpcsa/;
+        }
+
+        error_page 404 /404.html;
+        location = /404.html {
+        }
+
+        error_page 500 502 503 504 /50x.html;
+        location = /50x.html {
+        }
+	
+	
+    }
+
+# Settings for a TLS enabled server.
+#
+#    server {
+#        listen       443 ssl http2;
+#        listen       [::]:443 ssl http2;
+#        server_name  _;
+#        root         /usr/share/nginx/html;
+#
+#        ssl_certificate "/etc/pki/nginx/server.crt";
+#        ssl_certificate_key "/etc/pki/nginx/private/server.key";
+#        ssl_session_cache shared:SSL:1m;
+#        ssl_session_timeout  10m;
+#        ssl_ciphers HIGH:!aNULL:!MD5;
+#        ssl_prefer_server_ciphers on;
+#
+#        # Load configuration files for the default server block.
+#        include /etc/nginx/default.d/*.conf;
+#
+#        error_page 404 /404.html;
+#            location = /40x.html {
+#        }
+#
+#        error_page 500 502 503 504 /50x.html;
+#            location = /50x.html {
+#        }
+#    }
+
+}
+
+[root@server nginx]# vim nginx.conf
+[root@server nginx]# systemctl restart nginx
+[root@server nginx]# cat nginx.conf
+# For more information on configuration, see:
+#   * Official English Documentation: http://nginx.org/en/docs/
+#   * Official Russian Documentation: http://nginx.org/ru/docs/
+
+user nginx;
+worker_processes auto;
+error_log /var/log/nginx/error.log;
+pid /run/nginx.pid;
+
+# Load dynamic modules. See /usr/share/doc/nginx/README.dynamic.
+include /usr/share/nginx/modules/*.conf;
+
+events {
+    worker_connections 1024;
+}
+
+http {
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  /var/log/nginx/access.log  main;
+
+    sendfile            on;
+    tcp_nopush          on;
+    tcp_nodelay         on;
+    keepalive_timeout   65;
+    types_hash_max_size 4096;
+
+    include             /etc/nginx/mime.types;
+    default_type        application/octet-stream;
+
+    # Load modular configuration files from the /etc/nginx/conf.d directory.
+    # See http://nginx.org/en/docs/ngx_core_module.html#include
+    # for more information.
+    include /etc/nginx/conf.d/*.conf;
+
+   upstream hpcsa {
+	server 10.10.10.135 weight=4;
+	server 10.10.10.133;
+	}
+
+    server {
+        listen       80;
+        listen       [::]:80;
+        server_name  _;
+        root         /usr/share/nginx/html;
+
+        # Load configuration files for the default server block.
+        include /etc/nginx/default.d/*.conf;
+	
+	location / {
+                proxy_pass http://hpcsa/;
+        }
+
+        error_page 404 /404.html;
+        location = /404.html {
+        }
+
+        error_page 500 502 503 504 /50x.html;
+        location = /50x.html {
+        }
+	
+	
+    }
+
+# Settings for a TLS enabled server.
+#
+#    server {
+#        listen       443 ssl http2;
+#        listen       [::]:443 ssl http2;
+#        server_name  _;
+#        root         /usr/share/nginx/html;
+#
+#        ssl_certificate "/etc/pki/nginx/server.crt";
+#        ssl_certificate_key "/etc/pki/nginx/private/server.key";
+#        ssl_session_cache shared:SSL:1m;
+#        ssl_session_timeout  10m;
+#        ssl_ciphers HIGH:!aNULL:!MD5;
+#        ssl_prefer_server_ciphers on;
+#
+#        # Load configuration files for the default server block.
+#        include /etc/nginx/default.d/*.conf;
+#
+#        error_page 404 /404.html;
+#            location = /40x.html {
+#        }
+#
+#        error_page 500 502 503 504 /50x.html;
+#            location = /50x.html {
+#        }
+#    }
+
+}
+
+[root@server nginx]# vim nginx.conf
+[root@server nginx]# systemctl restart nginx
+[root@server nginx]# vim nginx.conf
+[root@server nginx]# systemctl restart nginx
+[root@server nginx]# vim nginx.conf
+[root@server nginx]# systemctl restart nginx
+Job for nginx.service failed because the control process exited with error code. See "systemctl status nginx.service" and "journalctl -xe" for details.
+[root@server nginx]# journalctl -xe
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit session-104.scope has finished starting up.
+-- 
+-- The start-up result is done.
+Jul 04 13:10:01 server CROND[21167]: (root) CMD (/usr/lib64/sa/sa1 1 1)
+Jul 04 13:10:33 server polkitd[705]: Registered Authentication Agent for unix-process:21177:4843010 (system bus name :1.492 [/usr/bin/pk
+Jul 04 13:10:33 server systemd[1]: Stopping The nginx HTTP and reverse proxy server...
+-- Subject: Unit nginx.service has begun shutting down
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit nginx.service has begun shutting down.
+Jul 04 13:10:33 server systemd[1]: Stopped The nginx HTTP and reverse proxy server.
+-- Subject: Unit nginx.service has finished shutting down
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit nginx.service has finished shutting down.
+Jul 04 13:10:33 server systemd[1]: Starting The nginx HTTP and reverse proxy server...
+-- Subject: Unit nginx.service has begun start-up
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit nginx.service has begun starting up.
+Jul 04 13:10:34 server nginx[21187]: nginx: [emerg] host not found in upstream "hpcsa" in /etc/nginx/nginx.conf:53
+Jul 04 13:10:34 server nginx[21187]: nginx: configuration file /etc/nginx/nginx.conf test failed
+Jul 04 13:10:34 server systemd[1]: nginx.service: control process exited, code=exited status=1
+Jul 04 13:10:34 server systemd[1]: Failed to start The nginx HTTP and reverse proxy server.
+-- Subject: Unit nginx.service has failed
+-- Defined-By: systemd
+-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel
+-- 
+-- Unit nginx.service has failed.
+-- 
+-- The result is failed.
+Jul 04 13:10:34 server systemd[1]: Unit nginx.service entered failed state.
+Jul 04 13:10:34 server systemd[1]: nginx.service failed.
+Jul 04 13:10:34 server polkitd[705]: Unregistered Authentication Agent for unix-process:21177:4843010 (system bus name :1.492, object pa
+[root@server nginx]# vim nginx.conf
+[root@server nginx]# systemctl restart nginx
+[root@server nginx]# vim nginx.conf
+[root@server nginx]# cat nginx.conf
+# For more information on configuration, see:
+#   * Official English Documentation: http://nginx.org/en/docs/
+#   * Official Russian Documentation: http://nginx.org/ru/docs/
+
+user nginx;
+worker_processes auto;
+error_log /var/log/nginx/error.log;
+pid /run/nginx.pid;
+
+# Load dynamic modules. See /usr/share/doc/nginx/README.dynamic.
+include /usr/share/nginx/modules/*.conf;
+
+events {
+    worker_connections 1024;
+}
+
+http {
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  /var/log/nginx/access.log  main;
+
+    sendfile            on;
+    tcp_nopush          on;
+    tcp_nodelay         on;
+    keepalive_timeout   65;
+    types_hash_max_size 4096;
+
+    include             /etc/nginx/mime.types;
+    default_type        application/octet-stream;
+
+    # Load modular configuration files from the /etc/nginx/conf.d directory.
+    # See http://nginx.org/en/docs/ngx_core_module.html#include
+    # for more information.
+    include /etc/nginx/conf.d/*.conf;
+
+#   upstream hpcsa {
+#	server 10.10.10.135 weight=4;
+##	server 10.10.10.133;
+#	}
+
+    server {
+        listen       80;
+        listen       [::]:80;
+        server_name  _;
+        root         /usr/share/nginx/html;
+
+        # Load configuration files for the default server block.
+        include /etc/nginx/default.d/*.conf;
+	
+#	location / {
+ #               proxy_pass http://hpcsa/;
+  #      }
+
+        error_page 404 /404.html;
+        location = /404.html {
+        }
+
+        error_page 500 502 503 504 /50x.html;
+        location = /50x.html {
+        }
+	location /{
+		proxy_pass http://localhost/;
+	}
+	location /acts {
+		proxy_pass http://10.10.10.133:8000/;
+	}
+	location /hpcsa {
+		proxy_pass http://10.10.10.133:9000/;
+	}
+	location /ditiss {
+		proxy_pass http://10.10.10.133:9500/;	
+	}
+	
+    }
+
+# Settings for a TLS enabled server.
+#
+#    server {
+#        listen       443 ssl http2;
+#        listen       [::]:443 ssl http2;
+#        server_name  _;
+#        root         /usr/share/nginx/html;
+#
+#        ssl_certificate "/etc/pki/nginx/server.crt";
+#        ssl_certificate_key "/etc/pki/nginx/private/server.key";
+#        ssl_session_cache shared:SSL:1m;
+#        ssl_session_timeout  10m;
+#        ssl_ciphers HIGH:!aNULL:!MD5;
+#        ssl_prefer_server_ciphers on;
+#
+#        # Load configuration files for the default server block.
+#        include /etc/nginx/default.d/*.conf;
+#
+#        error_page 404 /404.html;
+#            location = /40x.html {
+#        }
+#
+#        error_page 500 502 503 504 /50x.html;
+#            location = /50x.html {
+#        }
+#    }
+
+}
+
